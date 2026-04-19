@@ -22,4 +22,5 @@ class PredictionModel:
                 
             
             case _:
+                
                 raise ValueError(f"Unsupported model type: {modelType}. Supported types are: 'RandomForest', 'XGBoost', 'LightGBM'.") 
