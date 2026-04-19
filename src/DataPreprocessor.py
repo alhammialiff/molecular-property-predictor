@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import deepchem as dc
+
 
 # RDKit
 from rdkit import Chem
@@ -11,11 +13,13 @@ from sklearn.model_selection import train_test_split
 
 class DataPreprocessor:
     
-    def __init__(self, rawData):
+    def __init__(self, rawData, modelType=None):
         
         # Input - We need the dataset (rawData) to perform the preprocessing steps, so we pass it in the constructor and store it as an instance variable
         self.rawData = rawData
         self.refinedData = None
+        
+        self.modelType = None
         
         # Result - Dataset splits
         self.xTrain = None
@@ -24,6 +28,12 @@ class DataPreprocessor:
         self.yTest = None
         self.compoundIdTrain = None
         self.compoundIdTest = None
+        
+        # For For AttentiveFP GNN featurisation
+        self.smilesTrainAfp = None
+        self.smilesTestAfp = None
+        self.trainDatasetAfp = None
+        self.testDatasetAfp = None
     
         
     '''
@@ -128,6 +138,7 @@ class DataPreprocessor:
     '''
     def featuriseSmiles(self, smiles):
         
+        
         # Convert SMILES into RDKit molecule objects
         molecule = Chem.MolFromSmiles(smiles)
         
@@ -152,6 +163,28 @@ class DataPreprocessor:
 
         return fingerprint + descriptors
 
+    '''
+    GNN Featurisation (Placeholder) - In the case of using a Graph Neural Network (GNN) for molecular property prediction, we would need to convert the SMILES strings into graph representations. This typically involves creating a graph where atoms are represented as nodes and bonds are represented as edges. We would also need to generate node features (e.g., atom types, hybridization states) and edge features (e.g., bond types) to capture the relevant chemical information for the GNN to learn from.
+    '''
+    def featuriseSmilesForGNN(self, smiles):
+        
+        # Get SMILES for raw data   
+        self.smilesTrainAfp = self.refinedData["SMILES"].iloc[self.xTrain.index].tolist()
+        self.smilesTestAfp = self.refinedData["SMILES"].iloc[self.xTest.index].tolist()
+        
+        # Create a MolGraphConvFeaturizer from DeepChem, which can convert the molecule 
+        # into a graph representation suitable for GNNs. 
+        # The use_edges=True argument indicates that we want to 
+        # include edge features (e.g., bond types) in the graph representation, 
+        # which can provide additional information for the GNN to learn from.
+        featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+        
+        # Featurize the SMILES strings for both the training and test sets to create graph representations that can be used as input for a GNN model. This step is crucial for preparing the data in a format that the GNN can process effectively.
+        featurizer.featurize(self.smilesTrainAfp)
+        featurizer.featurize(self.smilesTestAfp)
+        
+        # Wrap into DeepChem Dataset objects
+        
     
     '''
     Performs an 80-20 train-test split on the dataset, ensuring that the distribution of the target variable (measured log(solubility:mol/L)) is maintained in both sets. This is important to ensure that our model can generalize well to unseen data and that the performance metrics we calculate on the test set are representative of how the model will perform in real-world scenarios. The method also returns the compound IDs for both the training and test sets, which can be useful for tracking and analyzing specific compounds during model evaluation.
@@ -167,11 +200,19 @@ class DataPreprocessor:
         # Train-test split (80-20)
         self.xTrain, self.xTest, self.yTrain, self.yTest, self.compoundIdTrain, self.compoundIdTest = train_test_split(X, y, self.refinedData["Compound ID"], test_size=0.2, random_state=42)
         
+        
     def getTrainTestSplits(self):
         
-        return self.xTrain, self.yTrain, self.xTest, self.yTest, self.compoundIdTrain, self.compoundIdTest    
+        return self.xTrain, self.yTrain, self.xTest, self.yTest, self.compoundIdTrain, self.compoundIdTest
+    
+    
+    def getTrainTestSplitsForGNN(self):
+        
+        return self.smilesTrainAfp, self.yTrain, self.smilesTestAfp, self.yTest
+    
     
     def run(self):
+        
         
         # 1. Structural Analysis and Missing Values
         self.performStructuralAnalysisAndMissingValues(self.rawData)
@@ -182,5 +223,18 @@ class DataPreprocessor:
         # 3. Categorical Variable Distribution
         self.investigateCategoricalVariableDistribution()
         
-        # 4. Train-Test Split
-        self.performTrainTestSplit(self.refinedData)
+        # 4. Featurisation - We will perform different featurisation steps depending on 
+        # whether we are using a traditional ML model (e.g., Random Forest) or a GNN. 
+        # For traditional ML models, we will convert the SMILES strings into numerical features using molecular descriptors and fingerprints. 
+        # For GNNs, we will convert the SMILES strings into graph representations that can be processed by the GNN.
+        match self.modelType:
+            
+            case 'GNN':
+            
+                # 4.1 GNN Featurisation
+                self.featuriseSmilesForGNN(self.refinedData["SMILES"])
+                
+            case 'RandomForest' | 'XGBoost':
+        
+                # 4.2 Train-Test Split
+                self.performTrainTestSplit(self.refinedData)

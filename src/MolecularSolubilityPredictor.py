@@ -2,6 +2,7 @@
 import glob
 import os
 import time
+from typing import Literal
 
 # Dataset and data manipulation libs
 import kagglehub
@@ -25,13 +26,13 @@ from PredictionModel import PredictionModel
 
 class MolecularSolubilityPredictor:
     
-
     def __init__(
         self, 
         xTrain = None, 
         yTrain = None, 
         xTest = None, 
-        yTest = None
+        yTest = None,
+        # modelType: Literal['GNN', 'RandomForest', 'XGBoost'] = 'RandomForest'
     ):
         
         # These get populated as the pipeline runs
@@ -40,6 +41,7 @@ class MolecularSolubilityPredictor:
         self.xTest = xTest
         self.yTest = yTest
         self.yPred = None
+        # self.modelType = modelType
     
     
     '''
