@@ -21,6 +21,8 @@ from rdkit.Chem.rdFingerprintGenerator import GetMorganGenerator
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, cross_val_score, train_test_split
 
+from PredictionModel import PredictionModel
+
 class MolecularSolubilityPredictor:
     
 
@@ -39,13 +41,14 @@ class MolecularSolubilityPredictor:
         self.yTest = yTest
         self.yPred = None
     
+    
     '''
     Trains a Random Forest model using the provided dataset and performs hyperparameter tuning using RandomizedSearchCV.
     '''
     def modelTraining(self):
         
         # 1. Initialise the Random Forest Regressor
-        rf = RandomForestRegressor()
+        predictionModel = PredictionModel(modelType='RandomForest')
         
         # 2. Define the hyperparameters to tune and their respective ranges/values for RandomizedSearchCV
         paramGrid = {
@@ -58,7 +61,7 @@ class MolecularSolubilityPredictor:
         
         # 3. Perform RandomizedSearchCV to find the best hyperparameters
         randomSearch = RandomizedSearchCV(
-            estimator=rf,
+            estimator=predictionModel,
             param_distributions=paramGrid,
             n_iter=50,
             cv=5,
@@ -86,6 +89,7 @@ class MolecularSolubilityPredictor:
 
         return None
     
+    
     def evaluateModelPerformance(self):
         
         # Define residual (yTest - yPred)
@@ -105,10 +109,10 @@ class MolecularSolubilityPredictor:
         print("\n" + "=" * 60 + "\n\n")
 
         
-    
     def printResult(self, yTest, yPred, compoundIdTest):
         
         return None
+    
     
     def runPipeline(self):
         
