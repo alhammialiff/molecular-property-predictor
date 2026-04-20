@@ -4,6 +4,8 @@ import numpy as np
 
 import deepchem as dc
 from PredictionModel import PredictionModel
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class GNNPredictor:
     
@@ -16,6 +18,8 @@ class GNNPredictor:
         self.yTest = yTest
         self.yPred = None
         self.model = None
+        
+        self.residuals = None
         
     '''
     PROCESS 2: Message Passing (inside AttentiveFP)
@@ -55,20 +59,41 @@ class GNNPredictor:
         self.yPred = self.model.predict(self.testDataset).flatten()
         
         # Define residual (yTest - yPred)
-        residuals = self.yTest - self.yPred
+        self.residuals = self.yTest - self.yPred
         
         # Calculate evaluation metrics (MSE, RMSE, MAE, R2)
-        mse = np.mean(residuals ** 2)
+        mse = np.mean(self.residuals ** 2)
         rmse = np.sqrt(mse) 
-        mae = np.mean(np.abs(residuals))
-        r2 = 1 - (np.sum(residuals ** 2) / np.sum((self.yTest - np.mean(self.yTest)) ** 2))
+        mae = np.mean(np.abs(self.residuals))
+        r2 = 1 - (np.sum(self.residuals ** 2) / np.sum((self.yTest - np.mean(self.yTest)) ** 2))
         
         print(f"MSE:  {mse:.4f}")
         print(f"RMSE: {rmse:.4f}")
         print(f"MAE:  {mae:.4f}")
         print(f"R²:   {r2:.4f}")
+    
+    '''
+    Plot Residuals and Predictions
+    '''
+    def plotPerformance(self):
         
+        plt.figure(figsize=(10, 6))
+        sns.scatterplot(x=self.yPred, y=self.residuals, alpha=0.5, color='teal')
+        plt.axhline(y=0, color='red', linestyle='--', linewidth=2)
+        
+        plt.title('Residual Analysis: Predicted Molecular Solubility vs Errors', fontsize=14)
+        plt.xlabel('Predicted Molecular Solubility', fontsize=12)
+        plt.ylabel('Residuals / Error (mol/L)', fontsize=12)
+        
+        plt.tight_layout()
+        plt.show()
+        
+        
+    '''
+    Run pipeline
+    '''
     def runPipeline(self):
         
         self.fitModel()
         self.evaluateModelPerformance()
+        self.plotPerformance()
