@@ -19,7 +19,7 @@ class DataPreprocessor:
         self.rawData = rawData
         self.refinedData = None
         
-        self.modelType = None
+        self.modelType = modelType
         
         # Result - Dataset splits
         self.xTrain = None
@@ -164,13 +164,38 @@ class DataPreprocessor:
         return fingerprint + descriptors
 
     '''
-    GNN Featurisation (Placeholder) - In the case of using a Graph Neural Network (GNN) for molecular property prediction, we would need to convert the SMILES strings into graph representations. This typically involves creating a graph where atoms are represented as nodes and bonds are represented as edges. We would also need to generate node features (e.g., atom types, hybridization states) and edge features (e.g., bond types) to capture the relevant chemical information for the GNN to learn from.
+    PROCESS 1: Featurisation
+    Unlike Random Forest which uses Morgan fingerprints (flat bit vectors),
+    GNNs require the molecule to be represented as a GRAPH:
+        - Nodes = atoms (with features like atomic number, charge, etc.)
+        - Edges = bonds (with features like bond type, aromaticity, etc.)
+    DeepChem's MolGraphConvFeaturizer handles this automatically from SMILES.
+    
+    (Process 2 & 3 in GNNPredictor.py)
     '''
     def featuriseSmilesForGNN(self, smiles):
         
+        # Filter out invalid/single-atom molecules before splitting
+        def isValidSmiles(smiles):
+            try:
+                mol = Chem.MolFromSmiles(smiles)
+                return mol is not None and mol.GetNumAtoms() > 1
+            except:
+                return False
+            
+        validMask = self.refinedData["SMILES"].apply(isValidSmiles)
+        filteredSmiles = self.refinedData["SMILES"][validMask]
+        filteredY = self.refinedData["measured log(solubility:mol/L)"][validMask]
+        
+        
         # Get SMILES for raw data   
-        self.smilesTrainAfp = self.refinedData["SMILES"].iloc[self.xTrain.index].tolist()
-        self.smilesTestAfp = self.refinedData["SMILES"].iloc[self.xTest.index].tolist()
+        # Step 1: Split SMILES into train/test
+        self.smilesTrainAfp, self.smilesTestAfp, self.yTrain, self.yTest = train_test_split(
+            filteredSmiles.tolist(), filteredY.values, test_size=0.2, random_state=42
+        )
+        # self.smilesTrainAfp, self.smilesTestAfp, self.yTrain, self.yTest = train_test_split(
+        #     self.rawData["SMILES"], self.rawData["measured log(solubility:mol/L)"], test_size=0.2, random_state=42
+        # )
         
         # Create a MolGraphConvFeaturizer from DeepChem, which can convert the molecule 
         # into a graph representation suitable for GNNs. 
@@ -180,11 +205,19 @@ class DataPreprocessor:
         featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
         
         # Featurize the SMILES strings for both the training and test sets to create graph representations that can be used as input for a GNN model. This step is crucial for preparing the data in a format that the GNN can process effectively.
-        featurizer.featurize(self.smilesTrainAfp)
-        featurizer.featurize(self.smilesTestAfp)
+        xTrain = featurizer.featurize(self.smilesTrainAfp)
+        xTest = featurizer.featurize(self.smilesTestAfp)
+        
+        # Force dtype=object to preserve GraphData objects
+        xTrain = np.array(xTrain, dtype=object)
+        xTest = np.array(xTest, dtype=object)
         
         # Wrap into DeepChem Dataset objects
+        self.trainDatasetAfp = dc.data.NumpyDataset(X=xTrain, y=self.yTrain)
+        self.testDatasetAfp = dc.data.NumpyDataset(X=xTest, y=self.yTest)
         
+        print(f"GNN Train size: {len(self.smilesTrainAfp)}")
+        print(f"GNN Test size: {len(self.smilesTestAfp)}")
     
     '''
     Performs an 80-20 train-test split on the dataset, ensuring that the distribution of the target variable (measured log(solubility:mol/L)) is maintained in both sets. This is important to ensure that our model can generalize well to unseen data and that the performance metrics we calculate on the test set are representative of how the model will perform in real-world scenarios. The method also returns the compound IDs for both the training and test sets, which can be useful for tracking and analyzing specific compounds during model evaluation.
@@ -201,16 +234,49 @@ class DataPreprocessor:
         self.xTrain, self.xTest, self.yTrain, self.yTest, self.compoundIdTrain, self.compoundIdTest = train_test_split(X, y, self.refinedData["Compound ID"], test_size=0.2, random_state=42)
         
         
+    '''
+    Returns the train and test splits for traditional ML models (e.g., Random Forest, XGBoost), 
+    including the featurised SMILES strings (as numerical features), the corresponding target values 
+    (measured log(solubility:mol/L)), and the compound IDs for both the training and test sets. 
+    
+    This allows us to easily access the preprocessed data for training and 
+    evaluating our machine learning models.
+    
+    Return:
+        - xTrain: List of featurised SMILES strings for the training set, which can be used as input for traditional ML models.
+        - yTrain: List of target values for the training set, which can be used as labels for traditional ML models.
+        - xTest: List of featurised SMILES strings for the test set, which can be used as input for traditional ML models.
+        - yTest: List of target values for the test set, which can be used as labels for traditional ML models.
+        - compoundIdTrain: List of compound IDs for the training set, which can be used for reference or further analysis.
+        - compoundIdTest: List of compound IDs for the test set, which can be used for reference or further analysis.
+    '''
     def getTrainTestSplits(self):
         
         return self.xTrain, self.yTrain, self.xTest, self.yTest, self.compoundIdTrain, self.compoundIdTest
     
     
+    '''
+    Returns the train and test splits specifically for the DeepChem GNN model (e.g., AttentiveFP), 
+    including the SMILES strings and the corresponding DeepChem Dataset objects.
+    
+    Return:
+        - smilesTrainAfp: List of SMILES strings for the training set, which can be used for reference or further analysis.
+        - smilesTestAfp: List of SMILES strings for the test set, which can be used for reference or further analysis.
+        - yTest: List of target values for the test set, which can be used as labels for evaluating the GNN model.
+        - trainDatasetAfp: DeepChem Dataset object containing the graph representations and target values for
+            the training set, which can be directly used as input for training a GNN model.
+        - testDatasetAfp: DeepChem Dataset object containing the graph representations and target values for
+            the test set, which can be directly used as input for evaluating a GNN model.
+    '''
     def getTrainTestSplitsForGNN(self):
         
-        return self.smilesTrainAfp, self.yTrain, self.smilesTestAfp, self.yTest
+    
+        return self.smilesTrainAfp, self.smilesTestAfp, self.yTest, self.trainDatasetAfp, self.testDatasetAfp
     
     
+    '''
+    Run the pipeline of data preprocessing steps
+    '''
     def run(self):
         
         
@@ -232,7 +298,7 @@ class DataPreprocessor:
             case 'GNN':
             
                 # 4.1 GNN Featurisation
-                self.featuriseSmilesForGNN(self.refinedData["SMILES"])
+                self.featuriseSmilesForGNN(self.refinedData)
                 
             case 'RandomForest' | 'XGBoost':
         

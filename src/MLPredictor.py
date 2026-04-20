@@ -24,7 +24,7 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, cross_val_
 
 from PredictionModel import PredictionModel
 
-class MolecularSolubilityPredictor:
+class MLPredictor:
     
     def __init__(
         self, 
