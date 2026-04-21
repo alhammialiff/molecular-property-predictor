@@ -22,17 +22,25 @@ class PredictionModel:
             
             case 'GNN':
                 
-                # Training 4
-                return dc_models.AttentiveFPModel(
-                    n_tasks=1,
-                    mode='regression',
-                    num_layers=5,           # ⬆️ deeper network
-                    num_timesteps=3,        # ⬆️ better readout
-                    graph_feat_size=300,    # ⬆️ wider network
-                    dropout=0.1,            # ⬇️ less dropout for larger dataset
-                    batch_size=16,          # ⬇️ smaller batch = better gradients
-                    learning_rate=0.0003,   # fine-tuned LR
-                )
+                # Training 4 
+                # MSE: 0.3420
+                # RMSE: 0.5848
+                # MAE: 0.4304
+                # R2: 0.5885
+                # Training Duration: 3 hours 10 mins!!!
+                #
+                # Measures to take: To synthesize more data for the training set
+                #
+                # return dc_models.AttentiveFPModel(
+                #     n_tasks=1,
+                #     mode='regression',
+                #     num_layers=5,           # ⬆️ deeper network
+                #     num_timesteps=3,        # ⬆️ better readout
+                #     graph_feat_size=300,    # ⬆️ wider network
+                #     dropout=0.1,            # ⬇️ less dropout for larger dataset
+                #     batch_size=16,          # ⬇️ smaller batch = better gradients
+                #     learning_rate=0.0003,   # fine-tuned LR
+                # )
             
                 # Training 3
                 # MSE: 0.3525
@@ -59,16 +67,16 @@ class PredictionModel:
                 # R2: 0.6071
                 # Training Duration: 2023.69 secs
                 #
-                # return dc_models.AttentiveFPModel(
-                #     n_tasks=1,
-                #     mode='regression',
-                #     num_layers=4,
-                #     num_timesteps=3,
-                #     graph_feat_size=256,
-                #     dropout=0.1,
-                #     batch_size=32,
-                #     learning_rate=0.0005,
-                # )
+                return dc_models.AttentiveFPModel(
+                    n_tasks=1,
+                    mode='regression',
+                    num_layers=4,
+                    num_timesteps=3,
+                    graph_feat_size=256,
+                    dropout=0.1,
+                    batch_size=32,
+                    learning_rate=0.0005,
+                )
                 
             case _:
                 

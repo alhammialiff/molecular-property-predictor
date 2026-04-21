@@ -5,7 +5,7 @@ import deepchem as dc
 
 # RDKit
 from rdkit import Chem
-from rdkit.Chem import AllChem, Descriptors
+from rdkit.Chem import AllChem, Descriptors, MolToSmiles, MolFromSmiles
 from rdkit.Chem.rdFingerprintGenerator import GetMorganGenerator
 
 # Scikit-learn
@@ -281,7 +281,7 @@ class DataPreprocessor:
     
     
     def featuriseAndSplitOnDeepChemDiskDatasets(self):
-        
+                
         for datasetIndex, diskDataset in enumerate(self.rawData):
         
             match datasetIndex:
@@ -289,9 +289,16 @@ class DataPreprocessor:
                 # Need to convert DiskDataset to DEEPCHEM NUMPYDATASET TO dtype=object first 
                 case 0:
                     
+                    # Extract SMILES and target values from the DiskDataset for training set
                     smilesTrain = diskDataset.ids.tolist()
                     yTrain = diskDataset.y.flatten()
                     
+                    # 2. Data Synthesis - Augment existing SMILES strings in the training set to create 
+                    # new, synthetic data points. This can help increase the diversity of the 
+                    # training data and improve the model's ability to generalize to unseen compounds. 
+                    smilesTrain, yTrain = self.augmentSmiles(smilesTrain, yTrain, augmentations=5)
+                    
+                    # 3. Featurize
                     featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
                     xTrain = featurizer.featurize(smilesTrain)
                     # xTrain = np.array([x for x in xTrain if hasattr(x, 'to_dgl_graph')], dtype=object)
@@ -389,6 +396,59 @@ class DataPreprocessor:
         
     
         return self.smilesTrainAfp, self.smilesTestAfp, self.smilesValidationAfp, self.yTest, self.yValidation, self.trainDatasetAfp, self.testDatasetAfp,  self.validationDatasetAfp
+    
+    '''
+    Performs SMILES augmentation by generating multiple randomized SMILES strings for each input SMILES string.
+    This technique can help increase the diversity of the training data and 
+    improve the robustness of machine learning models by providing different representations of the same molecule. 
+    The method takes a list of SMILES strings and their corresponding target values, and for each SMILES string, 
+    it generates a specified number of augmented SMILES strings by randomizing the order of atoms in the molecule. 
+    The original SMILES string and its target value are also included in the augmented dataset to ensure that the 
+    model learns from both the original and augmented representations.
+    
+    -- Why did I do this? --
+    R2 Score for Lipophilicity Prediction with AttentiveFP constantly gave me 57-60% R2 on the test set, 
+    which was much lower than the 0.7+ R2 scores reported in the literature for this task. 
+    I suspected that this was due to the limited size of the training data (only [4200,1024] compounds), 
+    which may not have been sufficient for the GNN to learn robust representations of the molecules and their properties. 
+    By performing SMILES augmentation, I was able to increase the effective size of the training data and 
+    provide more diverse examples for the GNN to learn from, which may potentially improved the model's performance 
+    on the test set.
+    '''
+    def augmentSmiles(self, smilesList, yList, augmentations=5):
+        
+        print("=" * 60 + "\n\n")
+        print(f"Data Synthesis\n")
+        print(f"Performing SMILES augmentation with {augmentations} augmentations per SMILES string...\n\n")
+        
+        augmentedSmiles = []
+        augmentedY = []
+        
+        for smiles, y in zip(smilesList, yList):
+            
+            mol = MolFromSmiles(smiles)
+            
+            if mol:
+                
+                # Append the original SMILES and target value to the augmented lists
+                augmentedSmiles.append(smiles)
+                augmentedY.append(y)
+                
+                for _ in range(augmentations):
+                    
+                    randomisedSmiles = MolToSmiles(mol, doRandom=True)
+                    
+                    # Append the augmented SMILES and the same target value to the augmented lists
+                    augmentedSmiles.append(randomisedSmiles)
+                    augmentedY.append(y)
+        
+        print(f"Augmented {len(smilesList)} SMILES to {len(augmentedSmiles)} SMILES with {augmentations} augmentations each.")
+        
+        # Convert back to numpy array as MolGraphConvFeaturizer expects numpy arrays 
+        # as input for Y
+        augmentedY = np.array(augmentedY)
+        
+        return augmentedSmiles, augmentedY
     
     
     '''

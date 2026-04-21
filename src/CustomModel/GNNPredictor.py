@@ -39,22 +39,28 @@ class GNNPredictor:
     '''    
     def fitModel(self):
         
+        # Initialise AttentiveFP model via factory builder
         self.model = PredictionModel(modelType='GNN')
         
         print("=" * 60 + "\n\n")
         
         print("Begin fitting AttentiveFP model...\n\n")
         
+        # [Debug] Start time
         startTime = time.time()
+        
+        # Fit model
         self.model.fit(
             self.trainDataset, 
-            nb_epoch=100,
+            nb_epoch=30,
             callbacks=dc.models.ValidationCallback(
                 self.validationDataset, # Dataset 1 from DiskDataset
                 interval=10, # Validate every 10 epochs
                 metrics=[dc.metrics.Metric(dc.metrics.pearson_r2_score)] 
             )    
         )
+        
+        # [Debug] End time
         endTime = time.time()
         
         print(f"AttentiveFP model fitting completed in {endTime - startTime:.2f} seconds.\n\n")
