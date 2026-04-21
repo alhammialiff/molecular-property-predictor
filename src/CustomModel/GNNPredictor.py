@@ -9,13 +9,19 @@ import seaborn as sns
 
 class GNNPredictor:
     
-    def __init__(self, smilesTrain, smilesTest, yTest, trainDataset, testDataset):
+    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset):
         
         self.smilesTrain = smilesTrain
         self.trainDataset = trainDataset
+        
         self.smilesTest = smilesTest
         self.testDataset = testDataset
         self.yTest = yTest
+        
+        self.smilesValidation = smilesValidation
+        self.yValidation = yValidation
+        self.validationDataset = validationDataset
+        
         self.yPred = None
         self.model = None
         
@@ -40,7 +46,15 @@ class GNNPredictor:
         print("Begin fitting AttentiveFP model...\n\n")
         
         startTime = time.time()
-        self.model.fit(self.trainDataset, nb_epoch=50)
+        self.model.fit(
+            self.trainDataset, 
+            nb_epoch=100,
+            callbacks=dc.models.ValidationCallback(
+                self.validationDataset, # Dataset 1 from DiskDataset
+                interval=10, # Validate every 10 epochs
+                metrics=[dc.metrics.Metric(dc.metrics.pearson_r2_score)] 
+            )    
+        )
         endTime = time.time()
         
         print(f"AttentiveFP model fitting completed in {endTime - startTime:.2f} seconds.\n\n")
@@ -71,6 +85,7 @@ class GNNPredictor:
         print(f"RMSE: {rmse:.4f}")
         print(f"MAE:  {mae:.4f}")
         print(f"R²:   {r2:.4f}")
+    
     
     '''
     Plot Residuals and Predictions

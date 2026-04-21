@@ -1,14 +1,14 @@
-
-
 from typing import Literal
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 import deepchem.models as dc_models
 
-
+'''
+A Factory class to create different types of prediction models based on the specified model type.
+'''
 class PredictionModel:
     
-    def __new__(cls, modelType: Literal['RandomForest', 'XGBoost']):
+    def __new__(cls, modelType: Literal['RandomForest', 'XGBoost', 'GNN']):
         
         match modelType:
             
@@ -16,25 +16,60 @@ class PredictionModel:
                 
                 return RandomForestRegressor()
                 
-            
             case 'XGBoost':
                 
                 return XGBRegressor()
             
             case 'GNN':
                 
+                # Training 4
                 return dc_models.AttentiveFPModel(
                     n_tasks=1,
                     mode='regression',
-                    num_layers=3,
-                    num_timesteps=2,
-                    graph_feat_size=200,
-                    dropout=0.2,
-                    batch_size=32,
-                    learning_rate=0.001,
+                    num_layers=5,           # ⬆️ deeper network
+                    num_timesteps=3,        # ⬆️ better readout
+                    graph_feat_size=300,    # ⬆️ wider network
+                    dropout=0.1,            # ⬇️ less dropout for larger dataset
+                    batch_size=16,          # ⬇️ smaller batch = better gradients
+                    learning_rate=0.0003,   # fine-tuned LR
                 )
-                
             
+                # Training 3
+                # MSE: 0.3525
+                # RMSE: 0.5937
+                # MAE: 0.4502
+                # R2: 0.5758
+                # Training Duration: 2735.08 secs
+                #
+                # return dc_models.AttentiveFPModel(
+                #     n_tasks=1,
+                #     mode='regression',
+                #     num_layers=5,           # ⬇️ revert
+                #     num_timesteps=2,        # ⬇️ revert
+                #     graph_feat_size=200,    # ⬇️ revert
+                #     dropout=0.1,
+                #     batch_size=32,
+                #     learning_rate=0.0005,    # ⬆️ revert
+                # )
+                
+                # Training #2
+                # MSE: 0.3565
+                # RMSE: 0.5714
+                # MAE: 0.4233
+                # R2: 0.6071
+                # Training Duration: 2023.69 secs
+                #
+                # return dc_models.AttentiveFPModel(
+                #     n_tasks=1,
+                #     mode='regression',
+                #     num_layers=4,
+                #     num_timesteps=3,
+                #     graph_feat_size=256,
+                #     dropout=0.1,
+                #     batch_size=32,
+                #     learning_rate=0.0005,
+                # )
+                
             case _:
                 
-                raise ValueError(f"Unsupported model type: {modelType}. Supported types are: 'RandomForest', 'XGBoost', 'LightGBM'.") 
+                raise ValueError(f"Unsupported model type: {modelType}. Supported types are: 'RandomForest', 'XGBoost', 'GNN'.") 

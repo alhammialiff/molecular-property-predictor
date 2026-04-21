@@ -3,23 +3,32 @@ from DatasetLoader import DatasetLoader
 from MLPredictor import MLPredictor
 from CustomModel.GNNPredictor import GNNPredictor
 
-
-if __name__ == "__main__":
-
-    # Load dataset
-    datasetLoader = DatasetLoader()
-    dataset = datasetLoader.loadKaggleDataset("yeonseokcho/delaney")
+def runSolubilityPipeline(dataset):
     
-    # Load Data Preprocessor and get train and test sets
-    preprocessorRandomForest = DataPreprocessor(dataset, "RandomForest")
-    preprocessorRandomForest.run()
-    xTrain, yTrain, xTest, yTest, compoundIdTrain, compoundIdTest = preprocessorRandomForest.getTrainTestSplits()
+    # =============================================================================
+    # A. Solubility Screening - Load Data Preprocessor and get train and test sets
+    # =============================================================================
 
-    preprocessorGNN = DataPreprocessor(dataset, "GNN")
-    preprocessorGNN.run()
-    smilesTrainAfp, smilesTestAfp, yTest, trainDatasetAfp, testDatasetAfp = preprocessorGNN.getTrainTestSplitsForGNN()
+    # A.1 For Random Forest
+    preprocessorRandomForestSolubility = DataPreprocessor(dataset, "RandomForest", 'solubility')
+    preprocessorRandomForestSolubility.run()
+    xTrain, yTrain, xTest, yTest, compoundIdTrain, compoundIdTest = preprocessorRandomForestSolubility.getTrainTestSplitsForML()
 
-    #Initialize GNN predictor
+    # A.1.1 Initialize predictor
+    mlPredictor = MLPredictor(
+        xTrain=xTrain,
+        yTrain=yTrain,
+        xTest=xTest,
+        yTest=yTest
+    )
+    mlPredictor.runPipeline()
+
+    # A.2 For GNN
+    preprocessorGNNSolubility = DataPreprocessor(dataset, "GNN", 'solubility')
+    preprocessorGNNSolubility.run()
+    smilesTrainAfp, smilesTestAfp, yTest, trainDatasetAfp, testDatasetAfp = preprocessorGNNSolubility.getTrainTestSplitsForGNN()
+
+    # A.2.1 Initialize GNN predictor
     gnnPredictor = GNNPredictor(
         smilesTrain=smilesTrainAfp,
         smilesTest=smilesTestAfp,
@@ -28,15 +37,49 @@ if __name__ == "__main__":
         testDataset=testDatasetAfp
     )
     gnnPredictor.runPipeline()
+    
+def runLipophilicityPipeline(dataset):
+    
+    preprocessorGNNLipophilicity = DataPreprocessor(dataset, "GNN", 'lipophilicity')
+    preprocessorGNNLipophilicity.run()
+    
+    smilesTrainAfp, smilesTestAfp, smilesValidationAfp, yTest, yValidation, trainDatasetAfp, testDatasetAfp, validationDatasetAfp = preprocessorGNNLipophilicity.getTrainTestSplitsForGNN()
 
-    # Initialize predictor
-    # mlPredictor = MLPredictor(
-    #     xTrain=xTrain,
-    #     yTrain=yTrain,
-    #     xTest=xTest,
-    #     yTest=yTest
-    # )
-    # mlPredictor.runPipeline()
+    # A.2.1 Initialize GNN predictor
+    gnnPredictor = GNNPredictor(
+        smilesTrain=smilesTrainAfp,
+        smilesTest=smilesTestAfp,
+        smilesValidation=smilesValidationAfp,
+        yTest = yTest,
+        yValidation = yValidation,
+        trainDataset=trainDatasetAfp,
+        testDataset=testDatasetAfp,
+        validationDataset=validationDatasetAfp
+    )
+    gnnPredictor.runPipeline()
+
+if __name__ == "__main__":
+
+    # Load dataset
+    datasetLoader = DatasetLoader()
+    
+    # dataset = datasetLoader.loadKaggleDataset("yeonseokcho/delaney")
+    dataset = datasetLoader.loadLipophilicityDataset()
+    
+    # =============================================================================
+    # A. Solubility Screening - Load Data Preprocessor and get train and test sets
+    # =============================================================================
+    # runSolubilityPipeline(dataset)
+    
+    # =============================================================================
+    # B. Lipophilicity Screening - Load Data Preprocessor and get train and test sets
+    # =============================================================================
+    runLipophilicityPipeline(dataset)
+    
+    
+    
+
+
     
     
     
