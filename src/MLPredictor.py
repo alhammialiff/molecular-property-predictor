@@ -35,11 +35,15 @@ class MLPredictor:
         # modelType: Literal['GNN', 'RandomForest', 'XGBoost'] = 'RandomForest'
     ):
         
-        # These get populated as the pipeline runs
+        # [Training Set]
         self.xTrain = xTrain
         self.yTrain = yTrain
+        
+        # [Test Set]
         self.xTest = xTest
         self.yTest = yTest
+        
+        # [Predictions]
         self.yPred = None
         # self.modelType = modelType
     
@@ -92,6 +96,9 @@ class MLPredictor:
         return None
     
     
+    '''
+    Evaluates the performance of the trained model on the test set MSE, MAE, RMSE, R2.
+    '''
     def evaluateModelPerformance(self):
         
         # Define residual (yTest - yPred)
@@ -110,16 +117,13 @@ class MLPredictor:
         
         print("\n" + "=" * 60 + "\n\n")
 
-        
-    def printResult(self, yTest, yPred, compoundIdTest):
-        
-        return None
     
-    
+    '''
+    Run pipeline - model training, evaluation and plotting
+    '''
     def runPipeline(self):
         
         self.modelTraining()
         self.evaluateModelPerformance()
-        # self.printResult(self.yTest, self.yPred, self.compoundIdTest)
         
     

@@ -1,7 +1,7 @@
 from DataPreprocessor import DataPreprocessor
 from DatasetLoader import DatasetLoader
 from MLPredictor import MLPredictor
-from CustomModel.GNNPredictor import GNNPredictor
+from CustomModels.GNNPredictor import GNNPredictor
 
 def runSolubilityPipeline(dataset):
     

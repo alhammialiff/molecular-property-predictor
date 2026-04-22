@@ -67,15 +67,23 @@ class PredictionModel:
                 # R2: 0.6071
                 # Training Duration: 2023.69 secs
                 #
-                return dc_models.AttentiveFPModel(
+                # return dc_models.AttentiveFPModel(
+                #     n_tasks=1,
+                #     mode='regression',
+                #     num_layers=3,
+                #     num_timesteps=2,
+                #     graph_feat_size=200,
+                #     dropout=0.2,
+                #     learning_rate=0.001,
+                #     batch_size=32,
+                    
+                # )
+                
+                return dc_models.MPNNModel(
                     n_tasks=1,
-                    mode='regression',
-                    num_layers=4,
-                    num_timesteps=3,
-                    graph_feat_size=256,
+                    n_hidden=3,
                     dropout=0.1,
-                    batch_size=32,
-                    learning_rate=0.0005,
+                    learning_rate=0.001 
                 )
                 
             case _:

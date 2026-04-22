@@ -1,7 +1,8 @@
+import os
 import pandas as pd
 import numpy as np
 import deepchem as dc
-
+import pathlib
 
 # RDKit
 from rdkit import Chem
@@ -10,6 +11,8 @@ from rdkit.Chem.rdFingerprintGenerator import GetMorganGenerator
 
 # Scikit-learn
 from sklearn.model_selection import train_test_split
+
+
 
 class DataPreprocessor:
     
@@ -313,17 +316,16 @@ class DataPreprocessor:
                 # This is validation set
                 case 1:
                     
+                    # Validation Set
                     smilesValidation = diskDataset.ids.tolist()
                     yValidation = diskDataset.y.flatten()
                     
                     featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
                     xValidation = featurizer.featurize(smilesValidation)
-                    # xValidation = np.array([x for x in xValidation if hasattr(x, 'to_dgl_graph')], dtype=object)
                     self.smilesValidationAfp = smilesValidation                    
                     self.yValidation = yValidation
-                    
                     self.validationDatasetAfp = dc.data.NumpyDataset(X=xValidation, y=yValidation)
-                
+     
                 case 2:
                     
                     # ✅ Re-featurize from SMILES using MolGraphConvFeaturizer
@@ -415,7 +417,7 @@ class DataPreprocessor:
     provide more diverse examples for the GNN to learn from, which may potentially improved the model's performance 
     on the test set.
     '''
-    def augmentSmiles(self, smilesList, yList, augmentations=5):
+    def augmentSmiles(self, smilesList, yList, augmentations=3):
         
         print("=" * 60 + "\n\n")
         print(f"Data Synthesis\n")
@@ -448,8 +450,54 @@ class DataPreprocessor:
         # as input for Y
         augmentedY = np.array(augmentedY)
         
+        # Save augmented dataset so that we do not have to augment it again every run
+        self.saveAugmentedDataset()
+        
         return augmentedSmiles, augmentedY
     
+    
+    '''
+    Saves the augmented datasets to disk in NumPy format (.npy) for later use. This allows us to easily access the preprocessed 
+    data for training and evaluating our GNN model without having to repeat the augmentation and featurisation steps, 
+    which can be time-consuming. The method saves the graph representations (X) and the target values (y) for the training, 
+    validation, and test sets in separate files within a specified directory.
+    '''
+    def saveAugmentedDataset(self, savePath='data/augmented'):
+    
+        os.makedirs(savePath, exist_ok=True)
+        
+        np.save(os.path.join(savePath, 'xTrain.npy'), self.trainDatasetAfp.X)
+        np.save(os.path.join(savePath, 'yTrain.npy'), self.trainDatasetAfp.y)
+        np.save(os.path.join(savePath, 'xValidation.npy'), self.validationDatasetAfp.X)
+        np.save(os.path.join(savePath, 'yValidation.npy'), self.validationDatasetAfp.y)
+        np.save(os.path.join(savePath, 'xTest.npy'), self.testDatasetAfp.X)
+        np.save(os.path.join(savePath, 'yTest.npy'), self.testDatasetAfp.y)
+
+        print(f"Augmented datasets saved to {savePath}")
+
+    '''
+    Loads the augmented datasets from disk and assigns them to the corresponding instance variables 
+    for the training, validation, and test sets. This allows us to easily access the preprocessed data 
+    for training and evaluating our GNN model without having to repeat the augmentation and featurisation steps, 
+    which can be time-consuming. The method assumes that the augmented datasets are saved in NumPy format (.npy) 
+    and that they contain both the graph representations (X) and the target values (y) for each set.
+    '''
+    def loadAugmentedDataset(self, savePath='data/augmented'):
+    
+        self.trainDatasetAfp = dc.data.NumpyDataset(
+            X=np.load(os.path.join(savePath, 'xTrain.npy'), allow_pickle=True),
+            y=np.load(os.path.join(savePath, 'yTrain.npy'), allow_pickle=True)
+        )
+        self.validationDatasetAfp = dc.data.NumpyDataset(
+            X=np.load(os.path.join(savePath, 'xValidation.npy'), allow_pickle=True),
+            y=np.load(os.path.join(savePath, 'yValidation.npy'), allow_pickle=True)
+        )
+        self.testDatasetAfp = dc.data.NumpyDataset(
+            X=np.load(os.path.join(savePath, 'xTest.npy'), allow_pickle=True),
+            y=np.load(os.path.join(savePath, 'yTest.npy'), allow_pickle=True)
+        )
+        
+        print(f"Augmented datasets loaded from {savePath}")
     
     '''
     Run the pipeline of data preprocessing steps
@@ -500,6 +548,15 @@ class DataPreprocessor:
         # Instead, we can directly perform the train-test split and featurisation steps that are 
         # specific to DeepChem's GNNs (e.g., AttentiveFP)
         if self.isDeepChemDataset:
+            
+            filePath = pathlib.Path("data/augmented")
+            
+            if filePath.exists():
+                
+                print(f"Augmented Dataset exists in {filePath}, loading dataset...")
+                
+                self.loadAugmentedDataset()
+                
             
             self.featuriseAndSplitOnDeepChemDiskDatasets()
             

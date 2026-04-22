@@ -1,0 +1,43 @@
+Model Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 13:26:53
+
+Training Duration: 5446.01 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000125
+ - Batch Size: 32
+
+--- redacted due to error in accessing different model hyperparamsModel Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 17:27:41
+
+Training Duration: 5194.43 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000250
+ - Batch Size: 32
+Best Validation R²: 0.7165
+
+Evaluation Metrics on Test Set:
+MSE:  0.3570
+RMSE: 0.5975
+MAE:  0.4503
+R²:   0.5704
+============================================================
+
+Model Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 20:27:59
+
+Training Duration: 6684.11 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000125
+ - Batch Size: 32
+Best Validation R²: 0.7123
+
+Evaluation Metrics on Test Set:
+MSE:  0.3461
+RMSE: 0.5883
+MAE:  0.4432
+R²:   0.5835
+============================================================
+
