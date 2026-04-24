@@ -96,10 +96,14 @@ class GNNPredictor:
         #     {'num_layers': 4, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.4, 'learning_rate': 0.0005},
         # ]
         
+        # [Where did I stop in Krabi]
+        # I am trying to run other models as an attempt to boost prediction performance
+        # To-do when I get home:
+        # 1. Run at least 3 other models
+        # 2. If all works out, refactor system design to ensure modularity and organisation
         hyperparamGrid = [
-            {'n_tasks':1,'n_hidden':3,'dropout':0.1,'learning_rate':0.001},
-            {'n_tasks':1,'n_hidden':3,'dropout':0.2,'learning_rate':0.001},
-            {'n_tasks':1,'n_hidden':3,'dropout':0.3,'learning_rate':0.001}
+            {'enc_dropout_p': 0.1},
+            {'enc_dropout_p': 0.2},
         ]
         
         # Define global training ID with local timestamp for uniqueness across runs
@@ -119,14 +123,14 @@ class GNNPredictor:
             
             # Update model hyperparameters
             # self.model.dropout = hyperparams['dropout']
-            self.model.learning_rate = hyperparams['learning_rate']
+            # self.model.learning_rate = hyperparams['learning_rate']
+            self.model.learning_rate = hyperparams['enc_dropout_p']
             # self.model.graph_feat_size = hyperparams['graph_feat_size']
             # self.model.num_layers = hyperparams['num_layers']
             
             # [[-Training Sequence-]] We train for a maximum of 30 epochs, but with early stopping based on validation R2.
             for epoch in range(30):
                 
-            
                 # [LR Decay] Decay learning rate every 10 epochs to help convergence
                 if epoch > 0 and epoch % 10 == 0:
                     currentLR = self.model.learning_rate
@@ -161,6 +165,7 @@ class GNNPredictor:
                         
                         # Write validation performance and hyperparameters to a summary file for this training sequence
                         with open(os.path.join(self.validationSummariesDir, f'validation_summary.txt'), 'a') as f:
+                            
                             f.write(f"Updated: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n")
                             f.write(f"Global Training ID: {self.globalTrainingId}\n")
                             f.write(f"Hyperparameter Combination ID: {self.hyperparameterId}\n")
@@ -202,8 +207,6 @@ class GNNPredictor:
   
                     break
             
-            
-        
         # [Debug] End time
         endTime = time.time()
         self.trainingDuration = endTime - startTime

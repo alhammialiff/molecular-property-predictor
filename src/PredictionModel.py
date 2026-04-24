@@ -79,11 +79,8 @@ class PredictionModel:
                     
                 # )
                 
-                return dc_models.MPNNModel(
-                    n_tasks=1,
-                    n_hidden=3,
-                    dropout=0.1,
-                    learning_rate=0.001 
+                return dc_models.DMPNNModel(
+                    enc_dropout_p = 0.1
                 )
                 
             case _:

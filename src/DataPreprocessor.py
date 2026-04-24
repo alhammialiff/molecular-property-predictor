@@ -344,6 +344,8 @@ class DataPreprocessor:
                     
                     raise ValueError(f"Unexpected dataset index: {datasetIndex}. Expected indices are 0 (train), 1 (validation), and 2 (test).")
     
+        # Save augmented dataset so that we do not have to augment it again every run
+        self.saveAugmentedDataset()
     
     '''
     Performs an 80-20 train-test split on the dataset, ensuring that the distribution of the target variable (measured log(solubility:mol/L)) is maintained in both sets. This is important to ensure that our model can generalize well to unseen data and that the performance metrics we calculate on the test set are representative of how the model will perform in real-world scenarios. The method also returns the compound IDs for both the training and test sets, which can be useful for tracking and analyzing specific compounds during model evaluation.
@@ -450,9 +452,6 @@ class DataPreprocessor:
         # as input for Y
         augmentedY = np.array(augmentedY)
         
-        # Save augmented dataset so that we do not have to augment it again every run
-        self.saveAugmentedDataset()
-        
         return augmentedSmiles, augmentedY
     
     
@@ -463,6 +462,8 @@ class DataPreprocessor:
     validation, and test sets in separate files within a specified directory.
     '''
     def saveAugmentedDataset(self, savePath='data/augmented'):
+    
+        print(self.trainDatasetAfp)
     
         os.makedirs(savePath, exist_ok=True)
         
@@ -551,7 +552,7 @@ class DataPreprocessor:
             
             filePath = pathlib.Path("data/augmented")
             
-            if filePath.exists():
+            if filePath.is_file():
                 
                 print(f"Augmented Dataset exists in {filePath}, loading dataset...")
                 
