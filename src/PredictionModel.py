@@ -1,4 +1,5 @@
 from typing import Literal
+from numpy import mat
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 import deepchem.models as dc_models
@@ -10,7 +11,7 @@ class PredictionModel:
     
     def __new__(
         cls, 
-        modelType: Literal['RandomForest', 'XGBoost', 'GNN'], 
+        modelType: Literal['ML', 'ANN', 'GNN'], 
         modelName: str = None, 
         hyperparameters: dict = {}
     ):
@@ -18,13 +19,17 @@ class PredictionModel:
         # [TODO] To switch Model Type to ML, ANN, GNN, and then modelName to specify the specific model within that type (e.g. RandomForest, XGBoost for ML; AttentiveFP, DMPNN for GNN)
         match modelType:
             
-            case 'RandomForest':
-                
-                return RandomForestRegressor()
-                
-            case 'XGBoost':
-                
-                return XGBRegressor()
+            case 'ML':
+
+                match modelName:
+                    
+                    case 'RandomForest':
+                        
+                        return RandomForestRegressor()
+                        
+                    case 'XGBoost':
+                        
+                        return XGBRegressor()
             
             case 'GNN':
                 

@@ -1,0 +1,720 @@
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.4943
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6505
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6957
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6706
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6895
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6700
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6839
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.7060
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.7087
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6922
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6983
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.7013
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6865
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6945
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6852
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6837
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6855
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6933
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6894
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6884
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6883
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6884
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6896
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6880
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6875
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6875
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6785
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6916
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6848
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6817
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6805
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6803
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6899
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6797
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6776
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6739
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6811
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6857
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6855
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6760
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6838
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6727
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6889
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6834
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6802
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6866
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6856
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6808
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6804
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6784
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6706
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6744
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6854
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6662
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6663
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6730
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6753
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6714
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6723
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6682
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6762
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6732
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6671
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6729
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6738
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6707
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6760
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6699
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6773
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6748
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6714
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6807
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6742
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6787
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6709
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6780
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6700
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6780
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6760
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6716
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6684
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6766
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6699
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6741
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6734
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6751
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6652
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6684
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6744
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6714
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6727
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6698
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6650
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6680
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6696
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6696
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6741
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6707
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6707
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6689
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6675
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6673
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6678
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6695
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6689
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6705
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6645
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6652
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6692
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6608
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6645
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6674
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6690
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6636
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6582
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6665
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6623
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6704
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6606
+
+Global Training ID: 20260422-115606
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'dropout': 0.3, 'learning_rate': 0.0005, 'graph_feat_size': 200, 'num_layers': 3}
+Best Validation R2: 0.6667
+

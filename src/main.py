@@ -2,6 +2,7 @@ from DataPreprocessor import DataPreprocessor
 from DatasetLoader import DatasetLoader
 from MLPredictor import MLPredictor
 from CustomModels.GNNPredictor import GNNPredictor
+import multiprocessing
 
 def runSolubilityPipeline(dataset):
     
@@ -38,7 +39,28 @@ def runSolubilityPipeline(dataset):
     )
     gnnPredictor.runPipeline()
     
-def runLipophilicityPipeline(dataset):
+def runLipophilicityPipelineAttentiveFP(dataset):
+    
+    preprocessorGNNLipophilicity = DataPreprocessor(dataset, "GNN", "AttentiveFP", 'lipophilicity')
+    preprocessorGNNLipophilicity.run()
+    
+    smilesTrainAfp, smilesTestAfp, smilesValidationAfp, yTest, yValidation, trainDatasetAfp, testDatasetAfp, validationDatasetAfp = preprocessorGNNLipophilicity.getTrainTestSplitsForGNN()
+
+    # A.2.1 Initialize GNN predictor
+    gnnPredictor = GNNPredictor(
+        smilesTrain=smilesTrainAfp,
+        smilesTest=smilesTestAfp,
+        smilesValidation=smilesValidationAfp,
+        yTest = yTest,
+        yValidation = yValidation,
+        trainDataset=trainDatasetAfp,
+        testDataset=testDatasetAfp,
+        validationDataset=validationDatasetAfp,
+        modelName='AttentiveFP'
+    )
+    gnnPredictor.runPipeline()
+
+def runLipophilicityPipelineDMPNN(dataset):
     
     preprocessorGNNLipophilicity = DataPreprocessor(dataset, "GNN", "DMPNN", 'lipophilicity')
     preprocessorGNNLipophilicity.run()
@@ -54,11 +76,10 @@ def runLipophilicityPipeline(dataset):
         yValidation = yValidation,
         trainDataset=trainDatasetAfp,
         testDataset=testDatasetAfp,
-        validationDataset=validationDatasetAfp
+        validationDataset=validationDatasetAfp,
+        modelName='DMPNN'
     )
     gnnPredictor.runPipeline()
-
-
 
 
 if __name__ == "__main__":
@@ -77,10 +98,20 @@ if __name__ == "__main__":
     # =============================================================================
     # B. Lipophilicity Screening - Load Data Preprocessor and get train and test sets
     # =============================================================================
-    runLipophilicityPipeline(dataset)
     
+    # Instantiate two processes for AttentiveFP and DMPNN to run in parallel
+    process1 = multiprocessing.Process(target=runLipophilicityPipelineAttentiveFP, args=(dataset,))
+    process2 = multiprocessing.Process(target=runLipophilicityPipelineDMPNN, args=(dataset,))
     
+    # Start the processes
+    process1.start() 
+    process2.start()
     
+    # Wait for both processes to finish
+    process1.join()
+    process2.join()
+    
+
 
 
     

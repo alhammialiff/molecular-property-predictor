@@ -5,6 +5,7 @@ import time
 import numpy as np
 
 import deepchem as dc
+import test
 from PredictionModel import PredictionModel
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -12,7 +13,7 @@ from rdkit.Chem import MolToInchiKey, MolFromSmiles
 
 class GNNPredictor:
     
-    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset):
+    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None):
         
         # [Training Set]
         self.globalTrainingId = None
@@ -36,12 +37,20 @@ class GNNPredictor:
         # [Predictions]
         self.yPred = None
         
-        # [Model and Checkpointing]
-        self.model = None
-        self.modelName = None  # Update model name to reflect the current model being used
-        self.checkpointDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'BestAttentiveFP')
-        self.validationSummariesDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'ValidationSummaries')
-        self.testSummariesDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'TestSummaries')
+        # [Model]
+        self.model = None # Current model instance being trained
+        self.bestModel = None # Best model instance based on validation R2 across all epochs and hyperparameter combinations
+        self.modelName = modelName  # Update model name to reflect the current model being used
+
+        # [Checkpoint and Summary Directories]
+        self.bestModelDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'AttentiveFP' , 'BestModel')
+        self.bestModelDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'DMPNN' , 'BestModel')
+
+        self.validationSummariesDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'AttentiveFP','ValidationSummaries')
+        self.testSummariesDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'AttentiveFP','TestSummaries')
+        
+        self.validationSummariesDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'DMPNN','ValidationSummaries')
+        self.testSummariesDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'DMPNN','TestSummaries')
         
         # [Evaluation Metrics]
         self.trainingDuration = None
@@ -66,8 +75,7 @@ class GNNPredictor:
     def fitModel(self):
         
         # Initialise AttentiveFP model via factory builder
-        self.model = PredictionModel(modelType='GNN', modelName='DMPNN', hyperparameters={})
-        self.modelName = 'DMPNN'
+        self.model = PredictionModel(modelType='GNN', modelName=self.modelName, hyperparameters={})
         
         patienceCounter = 0
         patience = self.validationPatience
@@ -88,28 +96,39 @@ class GNNPredictor:
         # [Debug] Start time
         startTime = time.time()
         
-        # [Grid Search Parameters] 6 Hyperparam Grid
-        # hyperparamGrid = [
-        #     {'num_layers': 2, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.1, 'learning_rate': 0.001 },
-        #     {'num_layers': 2, 'num_timesteps': 3, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
-        #     {'num_layers': 3, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
-        #     {'num_layers': 3, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.3, 'learning_rate': 0.001 },
-        #     {'num_layers': 4, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.3, 'learning_rate': 0.0005},
-        #     {'num_layers': 4, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.4, 'learning_rate': 0.0005},
-        # ]
-        
-        # [Where did I stop in Krabi]
-        # I am trying to run other models as an attempt to boost prediction performance
-        # To-do when I get home:
-        # 1. Run at least 3 other models
-        # 2. If all works out, refactor system design to ensure modularity and organisation
-        hyperparamGrid = [
-            {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 32},
-            {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64},
-            {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 32},
-            {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 64},
-        ]
-        
+        # [Grid Search Parameters] 
+        match self.modelName:
+
+            case 'AttentiveFP':
+
+                validationSummariesDir = self.validationSummariesDirAttentiveFP
+                checkpointDir = self.bestModelDirAttentiveFP
+
+                # For AttentiveFP, we focus on tuning num_layers, num_timesteps, graph_feat_size, dropout and learning_rate for a start
+                # To document grids like a config file in a separate script
+                hyperparamGrid = [
+                    {'num_layers': 2, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.1, 'learning_rate': 0.001 },
+                    {'num_layers': 2, 'num_timesteps': 3, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
+                    {'num_layers': 3, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
+                    {'num_layers': 3, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.3, 'learning_rate': 0.001 },
+                    {'num_layers': 4, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.3, 'learning_rate': 0.0005},
+                    {'num_layers': 4, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.4, 'learning_rate': 0.0005},
+                ]
+
+            case 'DMPNN':
+
+                validationSummariesDir = self.validationSummariesDirDMPNN
+                checkpointDir = self.bestModelDirDMPNN
+
+                # For DMPNN, we focus on tuning learning_rate, batch_size and enc_dropout_p for a start
+                # We are getting an r2 score of 62.28% with enc_dropout_p of 0.1, learning_rate of 0.001 and batch_size of 64, so we will explore around these values in the grid search.
+                hyperparamGrid = [
+                    {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64},
+                    {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 64},
+                    {'enc_dropout_p': 0.1, 'learning_rate': 0.0005, 'batch_size': 64},
+                    {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64},
+                ]
+                
         # Define global training ID with local timestamp for uniqueness across runs
         self.globalTrainingId = time.strftime("%Y%m%d-%H%M%S")  # Using timestamp for uniqueness
         
@@ -117,7 +136,7 @@ class GNNPredictor:
         for idx, hyperparams in enumerate(hyperparamGrid):
 
             # Re-initialize model for each hyperparameter combination to ensure a fresh start
-            self.model = PredictionModel(modelType='GNN', modelName='DMPNN', hyperparameters=hyperparams)
+            self.model = PredictionModel(modelType='GNN', modelName=self.modelName, hyperparameters=hyperparams)
             
             # Reset Training Sequence Best Valid R2 score everytime we start a new 
             # training sequence with a different hyperparameter combination.
@@ -128,13 +147,6 @@ class GNNPredictor:
             
             print(f"Grid Search Iteration {idx + 1}/{len(hyperparamGrid)}: Testing hyperparameters: {hyperparams}\n")
             
-            # Update model hyperparameters
-            # self.model.dropout = hyperparams['dropout']
-            # self.model.learning_rate = hyperparams['learning_rate']
-            # self.model.enc_dropout_p = hyperparams['enc_dropout_p']
-            # self.model.batch_size = hyperparams['batch_size'] 
-            # self.model.graph_feat_size = hyperparams['graph_feat_size']
-            # self.model.num_layers = hyperparams['num_layers']
             
             # [[-Training Sequence-]] We train for a maximum of 30 epochs, but with early stopping based on validation R2.
             for epoch in range(30):
@@ -170,9 +182,14 @@ class GNNPredictor:
                         
                         # Update global best validation R2 and corresponding hyperparameters
                         self.bestValidationR2 = trainingSequenceBestValidationR2
+                        self.bestHyperparameters = hyperparams
+
+                        # Save the best model instance
+                        self.bestModel = self.model  
                         
-                        # Write validation performance and hyperparameters to a summary file for this training sequence
-                        with open(os.path.join(self.validationSummariesDir, f'validation_summary.txt'), 'a') as f:
+                        # [Validation Summaries] Write validation performance and hyperparameters to a summary file for 
+                        # this training sequence
+                        with open(os.path.join(validationSummariesDir, f'validation_summary.txt'), 'a') as f:
                             
                             f.write(f"Updated: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n")
                             f.write(f"Global Training ID: {self.globalTrainingId}\n")
@@ -183,15 +200,15 @@ class GNNPredictor:
                             
                         # [Keeping only one Checkpoint at any time]
                         # Clear old checkpoints — keep only the global best
-                        if os.path.exists(self.checkpointDir):
+                        if os.path.exists(checkpointDir):
                             
-                            shutil.rmtree(self.checkpointDir)
+                            shutil.rmtree(checkpointDir)
                             
                         # [Edge case - first best during run] Ensure checkpoint directory exists
-                        os.makedirs(self.checkpointDir, exist_ok=True)
+                        os.makedirs(checkpointDir, exist_ok=True)
                         
                         # Save the best model checkpoint
-                        self.model.save_checkpoint(model_dir=self.checkpointDir)
+                        self.bestModel.save_checkpoint(model_dir=checkpointDir)
 
                     # We want patienceCounter to reset at the sequence level 
                     # (not just epoch level) because we want to give each hyperparameter combination a fair chance to train for multiple epochs before we decide to stop it. 
@@ -211,7 +228,7 @@ class GNNPredictor:
                     
                     # Restore the best model checkpoint before breaking, ensuring we 
                     # evaluate the best version of the model on the test set.
-                    self.model.restore(model_dir=self.checkpointDir)
+                    self.bestModel.restore(model_dir=checkpointDir)
   
                     break
             
@@ -230,9 +247,22 @@ class GNNPredictor:
     to predict the solubility value.
     '''
     def evaluateModelPerformance(self):
+
+        # [Test Summaries Dir]
+        match self.modelName:
+
+            case 'AttentiveFP':
+                
+                testSummariesDir = self.testSummariesDirAttentiveFP
+            
+            case 'DMPNN':
+                
+                testSummariesDir = self.testSummariesDirDMPNN
+
+
         
         # Predict on test set
-        self.yPred = self.model.predict(self.testDataset).flatten()
+        self.yPred = self.bestModel.predict(self.testDataset).flatten()
         
         # Define residual (yTest - yPred)
         self.residuals = self.yTest - self.yPred
@@ -248,15 +278,19 @@ class GNNPredictor:
         print(f"MAE:  {self.mae:.4f}")
         print(f"R²:   {self.r2:.4f}")
         
+
         # Export summary, timestamp (local timezone), model hyper parameters, performance into .txt
-        with open(os.path.join(self.testSummariesDir, f'test_summary.txt'), 'a') as f:
+        with open(os.path.join(testSummariesDir, f'test_summary.txt'), 'a') as f:
 
             f.write(f"Model Performance Summary - {self.modelName}\n")
             f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n\n")
             f.write(f"Training Duration: {self.trainingDuration:.2f} seconds\n\n")
             f.write(f"Model Hyperparameters:\n")
-            f.write(f" - Learning Rate: {self.model.learning_rate:.6f}\n")
-            f.write(f" - Batch Size: {self.model.batch_size}\n")
+
+            for hyperparam, value in self.bestHyperparameters.items():
+
+                f.write(f" - {hyperparam}: {value}\n")
+
             f.write(f"Best Validation R²: {self.bestValidationR2:.4f}\n\n")
             f.write(f"Evaluation Metrics on Test Set:\n")
             f.write(f"MSE:  {self.mse:.4f}\n")

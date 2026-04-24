@@ -45,8 +45,18 @@ class DataPreprocessor:
         self.compoundIdTest = None
 
         # [Augmented Dataset File Path]
-        self.augmentedDatasetFilePath = pathlib.Path(__file__).parent / 'Datasets' / 'Augmented'
-        
+        try:
+
+            if self.modelName is not None:
+                self.augmentedDatasetFilePath = pathlib.Path(__file__).parent / 'Datasets' / self.modelName / 'Augmented'
+            else:
+                raise ValueError("Model name must be provided to construct augmented dataset file path.")
+
+        except Exception as e:
+
+            print(f"Error constructing augmented dataset file path: {e}")
+            self.augmentedDatasetFilePath = None
+
         # For AttentiveFP GNN featurisation
         self.smilesTrainAfp = None
         self.smilesValidationAfp = None
@@ -582,7 +592,6 @@ class DataPreprocessor:
         # Instead, we can directly perform the train-test split and featurisation steps that are 
         # specific to DeepChem's GNNs (e.g., AttentiveFP)
         if self.isDeepChemDataset:
-            
             
 
             expectedFiles = [

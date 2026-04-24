@@ -1,0 +1,95 @@
+Model Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 13:26:53
+
+Training Duration: 5446.01 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000125
+ - Batch Size: 32
+
+--- redacted due to error in accessing different model hyperparamsModel Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 17:27:41
+
+Training Duration: 5194.43 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000250
+ - Batch Size: 32
+Best Validation Rï¿½: 0.7165
+
+Evaluation Metrics on Test Set:
+MSE:  0.3570
+RMSE: 0.5975
+MAE:  0.4503
+Rï¿½:   0.5704
+============================================================
+
+Model Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-22 20:27:59
+
+Training Duration: 6684.11 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000125
+ - Batch Size: 32
+Best Validation Rï¿½: 0.7123
+
+Evaluation Metrics on Test Set:
+MSE:  0.3461
+RMSE: 0.5883
+MAE:  0.4432
+Rï¿½:   0.5835
+============================================================
+
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-24 15:06:52
+
+Training Duration: 2017.64 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000250
+ - Batch Size: 64
+Best Validation Rï¿½: 0.7421
+
+Evaluation Metrics on Test Set:
+MSE:  0.3235
+RMSE: 0.5688
+MAE:  0.4373
+Rï¿½:   0.6108
+============================================================
+
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-24 16:04:04
+
+Training Duration: 2126.11 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000250
+ - Batch Size: 64
+Best Validation Rï¿½: 0.7400
+
+Evaluation Metrics on Test Set:
+MSE:  0.3203
+RMSE: 0.5659
+MAE:  0.4315
+Rï¿½:   0.6146
+============================================================
+
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-24 17:49:32
+
+Training Duration: 3821.07 seconds
+
+Model Hyperparameters:
+ - enc_dropout_p: 0.1
+ - learning_rate: 0.001
+ - batch_size: 64
+Best Validation R²: 0.7441
+
+Evaluation Metrics on Test Set:
+MSE:  0.3135
+RMSE: 0.5599
+MAE:  0.4259
+R²:   0.6228
+============================================================
+
