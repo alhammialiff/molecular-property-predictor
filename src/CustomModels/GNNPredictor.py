@@ -38,6 +38,7 @@ class GNNPredictor:
         
         # [Model and Checkpointing]
         self.model = None
+        self.modelName = None  # Update model name to reflect the current model being used
         self.checkpointDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'BestAttentiveFP')
         self.validationSummariesDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'ValidationSummaries')
         self.testSummariesDir = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'TestSummaries')
@@ -65,7 +66,8 @@ class GNNPredictor:
     def fitModel(self):
         
         # Initialise AttentiveFP model via factory builder
-        self.model = PredictionModel(modelType='GNN')
+        self.model = PredictionModel(modelType='GNN', modelName='DMPNN', hyperparameters={})
+        self.modelName = 'DMPNN'
         
         patienceCounter = 0
         patience = self.validationPatience
@@ -81,7 +83,7 @@ class GNNPredictor:
         
         print("=" * 60 + "\n\n")
         
-        print("Begin fitting AttentiveFP model...\n\n")
+        print(f"Begin fitting {self.modelName} model...\n\n")
         
         # [Debug] Start time
         startTime = time.time()
@@ -102,8 +104,10 @@ class GNNPredictor:
         # 1. Run at least 3 other models
         # 2. If all works out, refactor system design to ensure modularity and organisation
         hyperparamGrid = [
-            {'enc_dropout_p': 0.1},
-            {'enc_dropout_p': 0.2},
+            {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 32},
+            {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64},
+            {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 32},
+            {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 64},
         ]
         
         # Define global training ID with local timestamp for uniqueness across runs
@@ -111,6 +115,9 @@ class GNNPredictor:
         
         # [[-Grid Search Loop-]] We iterate through the hyperparameter combinations, training a model for each and evaluating on the validation set.
         for idx, hyperparams in enumerate(hyperparamGrid):
+
+            # Re-initialize model for each hyperparameter combination to ensure a fresh start
+            self.model = PredictionModel(modelType='GNN', modelName='DMPNN', hyperparameters=hyperparams)
             
             # Reset Training Sequence Best Valid R2 score everytime we start a new 
             # training sequence with a different hyperparameter combination.
@@ -124,7 +131,8 @@ class GNNPredictor:
             # Update model hyperparameters
             # self.model.dropout = hyperparams['dropout']
             # self.model.learning_rate = hyperparams['learning_rate']
-            self.model.learning_rate = hyperparams['enc_dropout_p']
+            # self.model.enc_dropout_p = hyperparams['enc_dropout_p']
+            # self.model.batch_size = hyperparams['batch_size'] 
             # self.model.graph_feat_size = hyperparams['graph_feat_size']
             # self.model.num_layers = hyperparams['num_layers']
             
@@ -211,7 +219,7 @@ class GNNPredictor:
         endTime = time.time()
         self.trainingDuration = endTime - startTime
         
-        print(f"AttentiveFP model fitting completed in {self.trainingDuration:.2f} seconds.\n\n")
+        print(f"{self.modelName} model fitting completed in {self.trainingDuration:.2f} seconds.\n\n")
         
     
     '''
@@ -242,7 +250,8 @@ class GNNPredictor:
         
         # Export summary, timestamp (local timezone), model hyper parameters, performance into .txt
         with open(os.path.join(self.testSummariesDir, f'test_summary.txt'), 'a') as f:
-            f.write(f"Model Performance Summary - AttentiveFP GNN\n")
+
+            f.write(f"Model Performance Summary - {self.modelName}\n")
             f.write(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n\n")
             f.write(f"Training Duration: {self.trainingDuration:.2f} seconds\n\n")
             f.write(f"Model Hyperparameters:\n")

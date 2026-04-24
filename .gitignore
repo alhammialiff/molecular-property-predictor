@@ -1,2 +1,3 @@
 .venv
 datasets/augmented/*
+src/Datasets/Augmented/*

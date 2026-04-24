@@ -8,8 +8,14 @@ A Factory class to create different types of prediction models based on the spec
 '''
 class PredictionModel:
     
-    def __new__(cls, modelType: Literal['RandomForest', 'XGBoost', 'GNN']):
+    def __new__(
+        cls, 
+        modelType: Literal['RandomForest', 'XGBoost', 'GNN'], 
+        modelName: str = None, 
+        hyperparameters: dict = {}
+    ):
         
+        # [TODO] To switch Model Type to ML, ANN, GNN, and then modelName to specify the specific model within that type (e.g. RandomForest, XGBoost for ML; AttentiveFP, DMPNN for GNN)
         match modelType:
             
             case 'RandomForest':
@@ -78,10 +84,46 @@ class PredictionModel:
                 #     batch_size=32,
                     
                 # )
+
                 
-                return dc_models.DMPNNModel(
-                    enc_dropout_p = 0.1
-                )
+                match modelName:
+
+                    case 'AttentiveFP':
+
+                        return dc_models.AttentiveFPModel(
+                            n_tasks=1,
+                            mode='regression',
+                            num_layers=3,
+                            num_timesteps=2,
+                            graph_feat_size=200,
+                            dropout=0.2,
+                            learning_rate=0.001,
+                            batch_size=32,
+                        )
+                    
+                    case 'DMPNN':
+
+                        # Work on DMPNN model first, modularising of models can come later
+                        # Default Model Hyperparameters (if none provided via grid search)
+                        if hyperparameters is None or hyperparameters == {}:
+                            
+                            return dc_models.DMPNNModel(
+                                n_tasks=1,
+                                batch_size=32,
+                                learning_rate=0.001,
+                                enc_dropout_p=0.1
+                            )
+                        
+                        # Model Hyperparameters provided via grid search
+                        else:
+
+                            return dc_models.DMPNNModel(
+                                n_tasks=1,
+                                batch_size=hyperparameters['batch_size'],
+                                learning_rate=hyperparameters['learning_rate'],
+                                enc_dropout_p=hyperparameters['enc_dropout_p']
+                            )
+                
                 
             case _:
                 

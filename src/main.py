@@ -24,7 +24,7 @@ def runSolubilityPipeline(dataset):
     mlPredictor.runPipeline()
 
     # A.2 For GNN
-    preprocessorGNNSolubility = DataPreprocessor(dataset, "GNN", 'solubility')
+    preprocessorGNNSolubility = DataPreprocessor(dataset, "GNN", "DMPNN", "solubility")
     preprocessorGNNSolubility.run()
     smilesTrainAfp, smilesTestAfp, yTest, trainDatasetAfp, testDatasetAfp = preprocessorGNNSolubility.getTrainTestSplitsForGNN()
 
@@ -40,7 +40,7 @@ def runSolubilityPipeline(dataset):
     
 def runLipophilicityPipeline(dataset):
     
-    preprocessorGNNLipophilicity = DataPreprocessor(dataset, "GNN", 'lipophilicity')
+    preprocessorGNNLipophilicity = DataPreprocessor(dataset, "GNN", "DMPNN", 'lipophilicity')
     preprocessorGNNLipophilicity.run()
     
     smilesTrainAfp, smilesTestAfp, smilesValidationAfp, yTest, yValidation, trainDatasetAfp, testDatasetAfp, validationDatasetAfp = preprocessorGNNLipophilicity.getTrainTestSplitsForGNN()
@@ -57,6 +57,9 @@ def runLipophilicityPipeline(dataset):
         validationDataset=validationDatasetAfp
     )
     gnnPredictor.runPipeline()
+
+
+
 
 if __name__ == "__main__":
 

@@ -41,3 +41,20 @@ MAE:  0.4432
 R²:   0.5835
 ============================================================
 
+Model Performance Summary - AttentiveFP GNN
+Timestamp: 2026-04-24 15:06:52
+
+Training Duration: 2017.64 seconds
+
+Model Hyperparameters:
+ - Learning Rate: 0.000250
+ - Batch Size: 64
+Best Validation R²: 0.7421
+
+Evaluation Metrics on Test Set:
+MSE:  0.3235
+RMSE: 0.5688
+MAE:  0.4373
+R²:   0.6108
+============================================================
+

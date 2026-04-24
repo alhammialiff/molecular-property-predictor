@@ -16,14 +16,15 @@ from sklearn.model_selection import train_test_split
 
 class DataPreprocessor:
     
-    def __init__(self, rawData, modelType=None, targetProperty='solubility'):
+
+    def __init__(self, rawData, modelType=None, modelName=None, targetProperty='solubility'):
         
-        # Input - We need the dataset (rawData) to perform the preprocessing steps, so we pass it in the constructor and store it as an instance variable
+        # [Input] - We need the dataset (rawData) to perform the preprocessing steps, so we pass it in the constructor and store it as an instance variable
         self.rawData = rawData
         self.refinedData = None
         self.targetProperty = targetProperty
         
-        # Map property to column name - This allows us to easily switch between different target properties (e.g., solubility, distribution) by simply changing the targetProperty variable, without having to modify the rest of the code that references the target column. It also makes the code more flexible and adaptable to different datasets that 
+        # [Map property to column name] - This allows us to easily switch between different target properties (e.g., solubility, distribution) by simply changing the targetProperty variable, without having to modify the rest of the code that references the target column. It also makes the code more flexible and adaptable to different datasets that 
         # may have different column names for the same property.
         self.targetColumn = {
             'solubility': 'measured log(solubility:mol/L)',
@@ -31,8 +32,9 @@ class DataPreprocessor:
         }.get(targetProperty)
                 
         self.modelType = modelType
+        self.modelName = modelName
         
-        # Result - Dataset splits
+        # [Result] - Dataset splits
         self.xTrain = None
         self.yTrain = None
         self.xValidation = None
@@ -41,8 +43,11 @@ class DataPreprocessor:
         self.yTest = None
         self.compoundIdTrain = None
         self.compoundIdTest = None
+
+        # [Augmented Dataset File Path]
+        self.augmentedDatasetFilePath = pathlib.Path(__file__).parent / 'Datasets' / 'Augmented'
         
-        # For For AttentiveFP GNN featurisation
+        # For AttentiveFP GNN featurisation
         self.smilesTrainAfp = None
         self.smilesValidationAfp = None
         self.smilesTestAfp = None
@@ -130,7 +135,6 @@ class DataPreprocessor:
             print("Cleaned dataset shape:", self.refinedData.shape)
 
             
-        
     '''
     We want to see the distribution of the categorical variables in the dataset, as this can inform us about potential issues such as class imbalance, and also guide us in choosing appropriate encoding techniques for these variables.
     '''
@@ -302,7 +306,11 @@ class DataPreprocessor:
                     smilesTrain, yTrain = self.augmentSmiles(smilesTrain, yTrain, augmentations=5)
                     
                     # 3. Featurize
-                    featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    if self.modelName == "AttentiveFP":
+                        featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    elif self.modelName == "DMPNN":
+                        featurizer = dc.feat.DMPNNFeaturizer()
+
                     xTrain = featurizer.featurize(smilesTrain)
                     # xTrain = np.array([x for x in xTrain if hasattr(x, 'to_dgl_graph')], dtype=object)
 
@@ -320,7 +328,12 @@ class DataPreprocessor:
                     smilesValidation = diskDataset.ids.tolist()
                     yValidation = diskDataset.y.flatten()
                     
-                    featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    if self.modelName == "AttentiveFP":
+                        featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    elif self.modelName == "DMPNN":
+                        featurizer = dc.feat.DMPNNFeaturizer()
+
+                    
                     xValidation = featurizer.featurize(smilesValidation)
                     self.smilesValidationAfp = smilesValidation                    
                     self.yValidation = yValidation
@@ -332,7 +345,11 @@ class DataPreprocessor:
                     smilesTest = diskDataset.ids.tolist()
                     yTest = diskDataset.y.flatten()
                     
-                    featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    if self.modelName == "AttentiveFP":
+                        featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
+                    elif self.modelName == "DMPNN":
+                        featurizer = dc.feat.DMPNNFeaturizer()
+
                     xTest = featurizer.featurize(smilesTest)
                     # xTest = np.array([x for x in xTest if hasattr(x, 'to_dgl_graph')], dtype=object)
                     
@@ -397,10 +414,10 @@ class DataPreprocessor:
             the test set, which can be directly used as input for evaluating a GNN model.
     '''
     def getTrainTestSplitsForGNN(self):
-        
     
         return self.smilesTrainAfp, self.smilesTestAfp, self.smilesValidationAfp, self.yTest, self.yValidation, self.trainDatasetAfp, self.testDatasetAfp,  self.validationDatasetAfp
     
+
     '''
     Performs SMILES augmentation by generating multiple randomized SMILES strings for each input SMILES string.
     This technique can help increase the diversity of the training data and 
@@ -461,20 +478,27 @@ class DataPreprocessor:
     which can be time-consuming. The method saves the graph representations (X) and the target values (y) for the training, 
     validation, and test sets in separate files within a specified directory.
     '''
-    def saveAugmentedDataset(self, savePath='data/augmented'):
+    def saveAugmentedDataset(self):
     
         print(self.trainDatasetAfp)
     
-        os.makedirs(savePath, exist_ok=True)
+        os.makedirs(self.augmentedDatasetFilePath, exist_ok=True)
         
-        np.save(os.path.join(savePath, 'xTrain.npy'), self.trainDatasetAfp.X)
-        np.save(os.path.join(savePath, 'yTrain.npy'), self.trainDatasetAfp.y)
-        np.save(os.path.join(savePath, 'xValidation.npy'), self.validationDatasetAfp.X)
-        np.save(os.path.join(savePath, 'yValidation.npy'), self.validationDatasetAfp.y)
-        np.save(os.path.join(savePath, 'xTest.npy'), self.testDatasetAfp.X)
-        np.save(os.path.join(savePath, 'yTest.npy'), self.testDatasetAfp.y)
+        # Save SMILES strings and target values for train, validation, and test sets
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'smilesTrain.npy'), self.smilesTrainAfp)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'smilesTest.npy'), self.smilesTestAfp)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'smilesValidation.npy'), self.smilesValidationAfp)
 
-        print(f"Augmented datasets saved to {savePath}")
+        # Save graph representations (X) and target values (y) for train, validation, and test sets
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'xTrain.npy'), self.trainDatasetAfp.X)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'yTrain.npy'), self.trainDatasetAfp.y)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'xValidation.npy'), self.validationDatasetAfp.X)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'yValidation.npy'), self.validationDatasetAfp.y)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'xTest.npy'), self.testDatasetAfp.X)
+        np.save(os.path.join(self.augmentedDatasetFilePath, 'yTest.npy'), self.testDatasetAfp.y)
+
+        print(f"Augmented datasets saved to {self.augmentedDatasetFilePath}")
+
 
     '''
     Loads the augmented datasets from disk and assigns them to the corresponding instance variables 
@@ -483,23 +507,32 @@ class DataPreprocessor:
     which can be time-consuming. The method assumes that the augmented datasets are saved in NumPy format (.npy) 
     and that they contain both the graph representations (X) and the target values (y) for each set.
     '''
-    def loadAugmentedDataset(self, savePath='data/augmented'):
-    
+    def loadAugmentedDataset(self):
+        
+        # Load SMILES strings and target values for train, validation, and test sets
         self.trainDatasetAfp = dc.data.NumpyDataset(
-            X=np.load(os.path.join(savePath, 'xTrain.npy'), allow_pickle=True),
-            y=np.load(os.path.join(savePath, 'yTrain.npy'), allow_pickle=True)
+            X=np.load(os.path.join(self.augmentedDatasetFilePath, 'xTrain.npy'), allow_pickle=True),
+            y=np.load(os.path.join(self.augmentedDatasetFilePath, 'yTrain.npy'), allow_pickle=True)
         )
         self.validationDatasetAfp = dc.data.NumpyDataset(
-            X=np.load(os.path.join(savePath, 'xValidation.npy'), allow_pickle=True),
-            y=np.load(os.path.join(savePath, 'yValidation.npy'), allow_pickle=True)
+            X=np.load(os.path.join(self.augmentedDatasetFilePath, 'xValidation.npy'), allow_pickle=True),
+            y=np.load(os.path.join(self.augmentedDatasetFilePath, 'yValidation.npy'), allow_pickle=True)
         )
         self.testDatasetAfp = dc.data.NumpyDataset(
-            X=np.load(os.path.join(savePath, 'xTest.npy'), allow_pickle=True),
-            y=np.load(os.path.join(savePath, 'yTest.npy'), allow_pickle=True)
+            X=np.load(os.path.join(self.augmentedDatasetFilePath, 'xTest.npy'), allow_pickle=True),
+            y=np.load(os.path.join(self.augmentedDatasetFilePath, 'yTest.npy'), allow_pickle=True)
         )
         
-        print(f"Augmented datasets loaded from {savePath}")
+        # Load graph representations (X) and target values (y) for train, validation, and test sets
+        self.yTest = np.load(os.path.join(self.augmentedDatasetFilePath, 'yTest.npy'), allow_pickle=True)
+        self.yValidation = np.load(os.path.join(self.augmentedDatasetFilePath, 'yValidation.npy'), allow_pickle=True)
+        self.smilesValidationAfp = np.load(os.path.join(self.augmentedDatasetFilePath, 'smilesValidation.npy'), allow_pickle=True)
+        self.smilesTrainAfp = np.load(os.path.join(self.augmentedDatasetFilePath, 'smilesTrain.npy'), allow_pickle=True)
+        self.smilesTestAfp = np.load(os.path.join(self.augmentedDatasetFilePath, 'smilesTest.npy'), allow_pickle=True)
+
+        print(f"Augmented datasets loaded from {self.augmentedDatasetFilePath}")
     
+
     '''
     Run the pipeline of data preprocessing steps
     '''
@@ -550,15 +583,30 @@ class DataPreprocessor:
         # specific to DeepChem's GNNs (e.g., AttentiveFP)
         if self.isDeepChemDataset:
             
-            filePath = pathlib.Path("data/augmented")
             
-            if filePath.is_file():
+
+            expectedFiles = [
+                self.augmentedDatasetFilePath / 'xTrain.npy',
+                self.augmentedDatasetFilePath / 'yTrain.npy',
+                self.augmentedDatasetFilePath / 'xValidation.npy',
+                self.augmentedDatasetFilePath / 'yValidation.npy',
+                self.augmentedDatasetFilePath / 'xTest.npy',
+                self.augmentedDatasetFilePath / 'yTest.npy',
+                self.augmentedDatasetFilePath / 'smilesTrain.npy',
+                self.augmentedDatasetFilePath / 'smilesValidation.npy',
+                self.augmentedDatasetFilePath / 'smilesTest.npy',
+            ]
+
+            # Load augmented dataset if we already have done it before            
+            if all(f.is_file() for f in expectedFiles):
                 
-                print(f"Augmented Dataset exists in {filePath}, loading dataset...")
+                print(f"Augmented Dataset exists in {self.augmentedDatasetFilePath}, loading dataset...")
                 
                 self.loadAugmentedDataset()
-                
-            
-            self.featuriseAndSplitOnDeepChemDiskDatasets()
+
+            # Otherwise, perform augmentation and split
+            else:
+
+                self.featuriseAndSplitOnDeepChemDiskDatasets()
             
         
