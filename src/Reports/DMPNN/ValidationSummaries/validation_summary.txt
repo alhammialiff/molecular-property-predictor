@@ -61,3 +61,38 @@ Grid Search Iteration 1/4
 Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
 Best Validation R2: 0.7220
 
+Updated: 2026-04-24 21:07:40
+Global Training ID: 20260424-204538
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7311
+
+Updated: 2026-04-24 21:08:21
+Global Training ID: 20260424-204538
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7350
+
+Updated: 2026-04-24 21:11:05
+Global Training ID: 20260424-204538
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/4
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7442
+
+Updated: 2026-04-24 21:18:35
+Global Training ID: 20260424-204538
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7448
+
+Updated: 2026-04-24 21:23:21
+Global Training ID: 20260424-204538
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/4
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7485
+

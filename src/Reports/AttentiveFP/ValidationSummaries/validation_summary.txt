@@ -390,3 +390,24 @@ Grid Search Iteration 1/6
 Hyperparameters: {'num_layers': 2, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.1, 'learning_rate': 0.001}
 Best Validation R2: 0.7069
 
+Updated: 2026-04-24 21:15:32
+Global Training ID: 20260424-204743
+Hyperparameter Combination ID: 3
+Grid Search Iteration 3/6
+Hyperparameters: {'num_layers': 3, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001}
+Best Validation R2: 0.7092
+
+Updated: 2026-04-24 21:28:01
+Global Training ID: 20260424-204743
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/6
+Hyperparameters: {'num_layers': 3, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.3, 'learning_rate': 0.001}
+Best Validation R2: 0.7279
+
+Updated: 2026-04-24 21:32:31
+Global Training ID: 20260424-204743
+Hyperparameter Combination ID: 4
+Grid Search Iteration 4/6
+Hyperparameters: {'num_layers': 3, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.3, 'learning_rate': 0.001}
+Best Validation R2: 0.7283
+

@@ -93,3 +93,23 @@ MAE:  0.4259
 R²:   0.6228
 ============================================================
 
+Model Performance Summary - AttentiveFP
+Timestamp: 2026-04-24 22:10:31
+
+Training Duration: 4967.30 seconds
+
+Model Hyperparameters:
+ - num_layers: 3
+ - num_timesteps: 3
+ - graph_feat_size: 300
+ - dropout: 0.3
+ - learning_rate: 0.001
+Best Validation R²: 0.7283
+
+Evaluation Metrics on Test Set:
+MSE:  0.3547
+RMSE: 0.5956
+MAE:  0.4416
+R²:   0.5732
+============================================================
+
