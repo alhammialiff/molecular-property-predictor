@@ -52,3 +52,57 @@ MAE:  0.4397
 R²:   0.6115
 ============================================================
 
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-25 20:09:46
+
+Training Duration: 2309.18 seconds
+
+Model Hyperparameters:
+ - enc_dropout_p: 0.1
+ - learning_rate: 0.001
+ - batch_size: 64
+Best Validation R²: 0.7470
+
+Evaluation Metrics on Test Set:
+MSE:  0.3173
+RMSE: 0.5633
+MAE:  0.4271
+R²:   0.6182
+============================================================
+
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-25 22:19:16
+
+Training Duration: 1446.27 seconds
+
+Model Hyperparameters:
+ - enc_dropout_p: 0.1
+ - learning_rate: 0.001
+ - batch_size: 64
+Best Validation R²: 0.7402
+
+Evaluation Metrics on Test Set:
+MSE:  0.3279
+RMSE: 0.5727
+MAE:  0.4327
+R²:   0.6054
+============================================================
+
+Model Performance Summary - DMPNN
+Timestamp: 2026-04-25 23:48:17
+
+Training Duration: 1073.17 seconds
+
+Model Hyperparameters:
+ - enc_dropout_p: 0.2
+ - learning_rate: 0.0005
+ - batch_size: 64
+Best Validation R²: 0.7377
+
+Evaluation Metrics on Test Set:
+MSE:  0.3210
+RMSE: 0.5666
+MAE:  0.4308
+R²:   0.6137
+============================================================
+

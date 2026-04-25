@@ -48,7 +48,7 @@ def runLipophilicityPipelineAttentiveFP(dataset):
     
     smilesTrainAfp, smilesTestAfp, smilesValidationAfp, yTest, yValidation, trainDatasetAfp, testDatasetAfp, validationDatasetAfp = preprocessorGNNLipophilicity.getTrainTestSplitsForGNN()
 
-    # A.2.1 Initialize GNN predictor
+    # A.2.1 Initialize AttentiveFP predictor
     gnnPredictor = GNNPredictor(
         smilesTrain=smilesTrainAfp,
         smilesTest=smilesTestAfp,
@@ -58,7 +58,9 @@ def runLipophilicityPipelineAttentiveFP(dataset):
         trainDataset=trainDatasetAfp,
         testDataset=testDatasetAfp,
         validationDataset=validationDatasetAfp,
-        modelName='AttentiveFP'
+        modelName='AttentiveFP',
+        epoch=60,
+        admetScreeningType='lipophilicity'
     )
     gnnPredictor.runPipeline()
 
@@ -80,7 +82,10 @@ def runLipophilicityPipelineDMPNN(dataset):
         trainDataset=trainDatasetAfp,
         testDataset=testDatasetAfp,
         validationDataset=validationDatasetAfp,
-        modelName='DMPNN'
+        modelName='DMPNN',
+        epoch=50,
+        admetScreeningType='lipophilicity'
+
     )
     gnnPredictor.runPipeline()
 
@@ -102,7 +107,9 @@ def runLipophilicityPipelineGCN(dataset):
         trainDataset=trainDatasetAfp,
         testDataset=testDatasetAfp,
         validationDataset=validationDatasetAfp,
-        modelName='GCN'
+        modelName='GCN',
+        epoch=60,
+        admetScreeningType='lipophilicity'
     )
     gnnPredictor.runPipeline()
 

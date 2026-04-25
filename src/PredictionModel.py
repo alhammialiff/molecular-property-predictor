@@ -135,24 +135,26 @@ class PredictionModel:
 
                             return dc_models.GCNModel(
                                 n_tasks=1,
+                                mode='regression',
                                 dropout=0.1,
                                 batch_size=32,
                                 learning_rate=0.001,
                                 graph_conv_layers=[64, 64],
-                                batchnorm=True,
-                                residual=True
+                                residual=True,
+                                batchnorm=True
                             )
                         
                         else:
 
                             return dc_models.GCNModel(
                                 n_tasks=1,
+                                mode='regression',
                                 dropout=hyperparameters['dropout'],
                                 batch_size=hyperparameters['batch_size'],
                                 learning_rate=hyperparameters['learning_rate'],
                                 graph_conv_layers=hyperparameters['graph_conv_layers'],
-                                batchnorm=True,
-                                residual=hyperparameters['residual']
+                                residual=hyperparameters['residual'],
+                                batchnorm=True
                             )
                 
             case _:

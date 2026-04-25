@@ -35,6 +35,7 @@ class DirectoryGenerator:
             case 'AttentiveFP':
 
                 return {
+                    "testSummariesDir": self.testSummariesDirAttentiveFP,
                     "validationSummariesDir": self.validationSummariesDirAttentiveFP,
                     "bestModelDir": self.bestModelDirAttentiveFP
                 }
@@ -42,6 +43,7 @@ class DirectoryGenerator:
             case 'DMPNN':
 
                 return {
+                    "testSummariesDir": self.testSummariesDirDMPNN,
                     "validationSummariesDir": self.validationSummariesDirDMPNN,
                     "bestModelDir": self.bestModelDirDMPNN
                 }   
@@ -49,6 +51,7 @@ class DirectoryGenerator:
             case 'GCN':
 
                 return {
+                    "testSummariesDir": self.testSummariesDirGCN,
                     "validationSummariesDir": self.validationSummariesDirGCN,
                     "bestModelDir": self.bestModelDirGCN
                 }

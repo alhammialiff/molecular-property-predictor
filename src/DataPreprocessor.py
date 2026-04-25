@@ -374,6 +374,7 @@ class DataPreprocessor:
         # Save augmented dataset so that we do not have to augment it again every run
         self.saveAugmentedDataset()
     
+    
     '''
     Performs an 80-20 train-test split on the dataset, ensuring that the distribution of the target variable (measured log(solubility:mol/L)) is maintained in both sets. This is important to ensure that our model can generalize well to unseen data and that the performance metrics we calculate on the test set are representative of how the model will perform in real-world scenarios. The method also returns the compound IDs for both the training and test sets, which can be useful for tracking and analyzing specific compounds during model evaluation.
     '''

@@ -12,16 +12,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit.Chem import MolToInchiKey, MolFromSmiles
 
+from Utilities.TextColorGenerator import TextColorGenerator
 from Utilities.ReportDirectoryGenerator import DirectoryGenerator
+from Utilities.SiUnitGenerator import SiUnitGenerator
+from colorama import Fore, Style, init
+
+init()
 
 class GNNPredictor:
     
-    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None):
+    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None, epoch = 30, admetScreeningType=None):
         
+        # [Model and Dataset Info]
+        self.admetScreeningType = admetScreeningType
+        self.model = None # Current model instance being trained
+        self.bestModel = None # Best model instance based on validation R2 across all epochs and hyperparameter combinations
+        self.modelName = modelName  # Update model name to reflect the current model being used
+
         # [Directories]
         self.directories = {}
 
         # [Training Set]
+        self.epoch = epoch
         self.globalTrainingId = None
         self.hyperparameterId = None
         self.smilesTrain = smilesTrain
@@ -43,12 +55,6 @@ class GNNPredictor:
         # [Predictions]
         self.yPred = None
         
-        # [Model]
-        self.model = None # Current model instance being trained
-        self.bestModel = None # Best model instance based on validation R2 across all epochs and hyperparameter combinations
-        self.modelName = modelName  # Update model name to reflect the current model being used
-
-
         # [Evaluation Metrics]
         self.trainingDuration = None
         self.residuals = None
@@ -56,6 +62,9 @@ class GNNPredictor:
         self.mse = None
         self.rmse = None
         self.r2 = None
+
+        # [Utilities]
+        self.textColor = TextColorGenerator().getColour(self.modelName)
         
 
         
@@ -85,19 +94,19 @@ class GNNPredictor:
         # [Initialize] Patience counter for early stopping during epoch training
         patienceCounter = 0
         patience = self.validationPatience
-        
+
         # Debug: check for molecule leakage between train and test
         # This is crucial to ensure that our model's performance metrics are valid and 
         # not artificially inflated by having the same molecules in both sets.
-        print("=" * 60 + "\n\n")
+        print(Fore.CYAN + "=" * 60 + "\n\n" + Style.RESET_ALL)
         trainInchiKeys = set(MolToInchiKey(MolFromSmiles(s)) for s in self.smilesTrain if MolFromSmiles(s))
         testInchiKeys  = set(MolToInchiKey(MolFromSmiles(s)) for s in self.smilesTest  if MolFromSmiles(s))
         overlap = trainInchiKeys & testInchiKeys
-        print(f"Overlapping molecules between train and test: {len(overlap)}\n\n")
+        print(Fore.YELLOW + f"Overlapping molecules between train and test: {len(overlap)}\n\n" + Style.RESET_ALL)
         
-        print("=" * 60 + "\n\n")
+        print(Fore.CYAN + "=" * 60 + "\n\n" + Style.RESET_ALL)
         
-        print(f"Begin fitting {self.modelName} model...\n\n")
+        print(self.textColor + f"Begin fitting {self.modelName} model...\n\n" + Style.RESET_ALL)
         
         # [Debug] Start time
         startTime = time.time()   
@@ -118,7 +127,7 @@ class GNNPredictor:
             # For tracking which training sequence we're on
             self.hyperparameterId = idx + 1 
             
-            print(f"Grid Search Iteration {idx + 1}/{len(hyperparamGrid)}: Testing hyperparameters: {hyperparams}\n")
+            print(self.textColor + f"[{self.modelName}] Grid Search Iteration {idx + 1}/{len(hyperparamGrid)}: Testing hyperparameters: {hyperparams}\n" + Style.RESET_ALL)
             
             
             # [[-Training Sequence-]] We train for a maximum of 30 epochs, but with early stopping based on validation R2.
@@ -128,7 +137,7 @@ class GNNPredictor:
                 if epoch > 0 and epoch % 10 == 0:
                     currentLR = self.model.learning_rate
                     self.model.learning_rate = currentLR * 0.5
-                    print(f"Epoch {epoch}: Learning rate decayed to {self.model.learning_rate:.6f}")
+                    print(self.textColor + f"[{self.modelName}] Epoch {epoch}: Learning rate decayed to {self.model.learning_rate:.6f}" + Style.RESET_ALL)
                 
                 # [Fit model]
                 self.model.fit(self.trainDataset,nb_epoch=1)
@@ -138,7 +147,7 @@ class GNNPredictor:
                 validScore = self.model.evaluate(self.validationDataset, [metric])
                 currentEpochValidationR2 = validScore['pearson_r2_score']
                 
-                print(f"Validation R2 after epoch {epoch + 1}: {currentEpochValidationR2:.4f}")
+                print(self.textColor + f"[{self.modelName}] Validation R2 after epoch {epoch + 1}: {currentEpochValidationR2:.4f}" + Style.RESET_ALL)
                 
                 # [Early stopping logic]
                 # If R2 improves, reset patience counter. If not, increment it.
@@ -197,7 +206,7 @@ class GNNPredictor:
                 # break and conclude training
                 if patienceCounter >= patience:
                     
-                    print(f"Early stopping triggered after {epoch + 1} epochs with best R2: {self.bestValidationR2:.4f}")
+                    print(self.textColor + f"[{self.modelName}] Early stopping triggered after {epoch + 1} epochs with best R2: {self.bestValidationR2:.4f}" + Style.RESET_ALL)
                     
                     # Restore the best model checkpoint before breaking, ensuring we 
                     # evaluate the best version of the model on the test set.
@@ -205,12 +214,18 @@ class GNNPredictor:
   
                     break
 
+
+
             
         # [Debug] End time
         endTime = time.time()
         self.trainingDuration = endTime - startTime
+
+        # After all hyperparameter combinations and epochs have been evaluated, ensure we have the 
+        # best model loaded for final evaluation on the test set.
+        self.bestModel.restore(model_dir=checkpointDir)
         
-        print(f"{self.modelName} model fitting completed in {self.trainingDuration:.2f} seconds.\n\n")
+        print(self.textColor + f"[{self.modelName}] Model fitting completed in {self.trainingDuration:.2f} seconds.\n\n" + Style.RESET_ALL)
         
     
     '''
@@ -237,10 +252,11 @@ class GNNPredictor:
         self.mae = np.mean(np.abs(self.residuals))
         self.r2 = 1 - (np.sum(self.residuals ** 2) / np.sum((self.yTest - np.mean(self.yTest)) ** 2))
         
-        print(f"MSE:  {self.mse:.4f}")
-        print(f"RMSE: {self.rmse:.4f}")
-        print(f"MAE:  {self.mae:.4f}")
-        print(f"R²:   {self.r2:.4f}")
+        
+        print(self.textColor + f"MSE:  {self.mse:.4f}" + Style.RESET_ALL)
+        print(self.textColor + f"RMSE: {self.rmse:.4f}" + Style.RESET_ALL)
+        print(self.textColor + f"MAE:  {self.mae:.4f}" + Style.RESET_ALL)
+        print(self.textColor + f"R²:   {self.r2:.4f}" + Style.RESET_ALL)
         
 
         # Export summary, timestamp (local timezone), model hyper parameters, performance into .txt
@@ -273,9 +289,17 @@ class GNNPredictor:
         sns.scatterplot(x=self.yPred, y=self.residuals, alpha=0.5, color='teal')
         plt.axhline(y=0, color='red', linestyle='--', linewidth=2)
         
-        plt.title('Residual Analysis: Predicted Molecular Solubility vs Errors', fontsize=14)
-        plt.xlabel('Predicted Molecular Solubility', fontsize=12)
-        plt.ylabel('Residuals / Error (mol/L)', fontsize=12)
+        plt.title(f'Residual Analysis: {self.modelName} - ({self.admetScreeningType.capitalize()} vs Errors)', fontsize=14)
+        plt.xlabel(f'Predicted Molecular {self.admetScreeningType.capitalize()}', fontsize=12)
+        plt.ylabel(f'Residuals / Error ({SiUnitGenerator(self.admetScreeningType).generate()})', fontsize=11)
+        
+        # Annotate with performance metrics
+        plt.annotate(
+            f'MSE:  {self.mse:.4f}\nRMSE: {self.rmse:.4f}\nMAE:  {self.mae:.4f}\nR²:   {self.r2:.4f}',
+            xy=(0.05, 0.95), xycoords='axes fraction',
+            fontsize=10, verticalalignment='top',
+            bbox=dict(boxstyle='round', facecolor='white', alpha=0.8)
+        )
         
         plt.tight_layout()
         plt.show()
