@@ -2,3 +2,4 @@
 datasets/augmented/*
 src/Datasets/AttentiveFP/Augmented/*
 src/Datasets/DMPNN/Augmented/*
+src/Datasets/GCN/Augmented/*

@@ -1,0 +1,133 @@
+Updated: 2026-04-25 10:30:19
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5091
+
+Updated: 2026-04-25 10:30:45
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5469
+
+Updated: 2026-04-25 10:31:11
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5646
+
+Updated: 2026-04-25 10:33:19
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5749
+
+Updated: 2026-04-25 10:34:36
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5789
+
+Updated: 2026-04-25 10:35:27
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5883
+
+Updated: 2026-04-25 10:36:18
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.5997
+
+Updated: 2026-04-25 10:40:06
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6129
+
+Updated: 2026-04-25 10:42:46
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6326
+
+Updated: 2026-04-25 10:43:40
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6454
+
+Updated: 2026-04-25 10:50:30
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6514
+
+Updated: 2026-04-25 10:51:48
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6593
+
+Updated: 2026-04-25 10:53:39
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6624
+
+Updated: 2026-04-25 10:55:31
+Global Training ID: 20260425-102953
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/4
+Hyperparameters: {'dropout': 0.2, 'learning_rate': 0.001, 'batch_size': 32}
+Best Validation R2: 0.6766
+
+Updated: 2026-04-25 15:09:40
+Global Training ID: 20260425-150914
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'graph_conv_layers': [64, 64], 'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32, 'residual': True}
+Best Validation R2: 0.0665
+
+Updated: 2026-04-25 15:10:05
+Global Training ID: 20260425-150914
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'graph_conv_layers': [64, 64], 'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32, 'residual': True}
+Best Validation R2: 0.2252
+
+Updated: 2026-04-25 15:11:23
+Global Training ID: 20260425-150914
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'graph_conv_layers': [64, 64], 'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32, 'residual': True}
+Best Validation R2: 0.4076
+
+Updated: 2026-04-25 15:12:39
+Global Training ID: 20260425-150914
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'graph_conv_layers': [64, 64], 'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32, 'residual': True}
+Best Validation R2: 0.5264
+
+Updated: 2026-04-25 15:13:05
+Global Training ID: 20260425-150914
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/4
+Hyperparameters: {'graph_conv_layers': [64, 64], 'dropout': 0.1, 'learning_rate': 0.001, 'batch_size': 32, 'residual': True}
+Best Validation R2: 0.6055
+

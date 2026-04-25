@@ -6,15 +6,21 @@ import numpy as np
 
 import deepchem as dc
 import test
+from CustomModels.GNNHyperparamGrid import GNNHyperparamGrid
 from PredictionModel import PredictionModel
 import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit.Chem import MolToInchiKey, MolFromSmiles
 
+from Utilities.ReportDirectoryGenerator import DirectoryGenerator
+
 class GNNPredictor:
     
     def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None):
         
+        # [Directories]
+        self.directories = {}
+
         # [Training Set]
         self.globalTrainingId = None
         self.hyperparameterId = None
@@ -42,16 +48,7 @@ class GNNPredictor:
         self.bestModel = None # Best model instance based on validation R2 across all epochs and hyperparameter combinations
         self.modelName = modelName  # Update model name to reflect the current model being used
 
-        # [Checkpoint and Summary Directories]
-        self.bestModelDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'AttentiveFP' , 'BestModel')
-        self.bestModelDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'ModelCheckpoints', 'DMPNN' , 'BestModel')
 
-        self.validationSummariesDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'AttentiveFP','ValidationSummaries')
-        self.testSummariesDirAttentiveFP = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'AttentiveFP','TestSummaries')
-        
-        self.validationSummariesDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'DMPNN','ValidationSummaries')
-        self.testSummariesDirDMPNN = os.path.join(os.path.dirname(__file__), '..', 'Reports', 'DMPNN','TestSummaries')
-        
         # [Evaluation Metrics]
         self.trainingDuration = None
         self.residuals = None
@@ -74,9 +71,18 @@ class GNNPredictor:
     '''    
     def fitModel(self):
         
-        # Initialise AttentiveFP model via factory builder
+        # [Initialise] AttentiveFP model via factory builder
         self.model = PredictionModel(modelType='GNN', modelName=self.modelName, hyperparameters={})
         
+        # [Initialise] directory generator to get checkpoint and summary directories based on model name
+        self.directories = DirectoryGenerator(self.modelName).getDirectories()
+        validationSummariesDir = self.directories['validationSummariesDir']
+        checkpointDir = self.directories['bestModelDir']
+
+        # [Initialise] hyperparameter grid specific to the model being trained
+        hyperparamGrid = GNNHyperparamGrid(self.modelName).getHyperparamGrid()
+
+        # [Initialize] Patience counter for early stopping during epoch training
         patienceCounter = 0
         patience = self.validationPatience
         
@@ -94,40 +100,7 @@ class GNNPredictor:
         print(f"Begin fitting {self.modelName} model...\n\n")
         
         # [Debug] Start time
-        startTime = time.time()
-        
-        # [Grid Search Parameters] 
-        match self.modelName:
-
-            case 'AttentiveFP':
-
-                validationSummariesDir = self.validationSummariesDirAttentiveFP
-                checkpointDir = self.bestModelDirAttentiveFP
-
-                # For AttentiveFP, we focus on tuning num_layers, num_timesteps, graph_feat_size, dropout and learning_rate for a start
-                # To document grids like a config file in a separate script
-                hyperparamGrid = [
-                    {'num_layers': 2, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.1, 'learning_rate': 0.001 },
-                    {'num_layers': 2, 'num_timesteps': 3, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
-                    {'num_layers': 3, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.2, 'learning_rate': 0.001 },
-                    {'num_layers': 3, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.3, 'learning_rate': 0.001 },
-                    {'num_layers': 4, 'num_timesteps': 2, 'graph_feat_size': 200, 'dropout': 0.3, 'learning_rate': 0.0005},
-                    {'num_layers': 4, 'num_timesteps': 3, 'graph_feat_size': 300, 'dropout': 0.4, 'learning_rate': 0.0005},
-                ]
-
-            case 'DMPNN':
-
-                validationSummariesDir = self.validationSummariesDirDMPNN
-                checkpointDir = self.bestModelDirDMPNN
-
-                # For DMPNN, we focus on tuning learning_rate, batch_size and enc_dropout_p for a start
-                # We are getting an r2 score of 62.28% with enc_dropout_p of 0.1, learning_rate of 0.001 and batch_size of 64, so we will explore around these values in the grid search.
-                hyperparamGrid = [
-                    {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64},
-                    {'enc_dropout_p': 0.2, 'learning_rate': 0.001, 'batch_size': 64},
-                    {'enc_dropout_p': 0.1, 'learning_rate': 0.0005, 'batch_size': 64},
-                    {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64},
-                ]
+        startTime = time.time()   
                 
         # Define global training ID with local timestamp for uniqueness across runs
         self.globalTrainingId = time.strftime("%Y%m%d-%H%M%S")  # Using timestamp for uniqueness
@@ -231,6 +204,7 @@ class GNNPredictor:
                     self.bestModel.restore(model_dir=checkpointDir)
   
                     break
+
             
         # [Debug] End time
         endTime = time.time()
@@ -249,17 +223,7 @@ class GNNPredictor:
     def evaluateModelPerformance(self):
 
         # [Test Summaries Dir]
-        match self.modelName:
-
-            case 'AttentiveFP':
-                
-                testSummariesDir = self.testSummariesDirAttentiveFP
-            
-            case 'DMPNN':
-                
-                testSummariesDir = self.testSummariesDirDMPNN
-
-
+        testSummariesDir = self.directories['testSummariesDir']
         
         # Predict on test set
         self.yPred = self.bestModel.predict(self.testDataset).flatten()

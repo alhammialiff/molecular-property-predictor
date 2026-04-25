@@ -316,7 +316,7 @@ class DataPreprocessor:
                     smilesTrain, yTrain = self.augmentSmiles(smilesTrain, yTrain, augmentations=5)
                     
                     # 3. Featurize
-                    if self.modelName == "AttentiveFP":
+                    if self.modelName == "AttentiveFP" or self.modelName == "GCN":
                         featurizer = dc.feat.MolGraphConvFeaturizer(use_edges=True)
                     elif self.modelName == "DMPNN":
                         featurizer = dc.feat.DMPNNFeaturizer()

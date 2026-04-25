@@ -22,7 +22,7 @@ class PredictionModel:
             case 'ML':
 
                 match modelName:
-                    
+
                     case 'RandomForest':
                         
                         return RandomForestRegressor()
@@ -129,6 +129,31 @@ class PredictionModel:
                                 enc_dropout_p=hyperparameters['enc_dropout_p']
                             )
                 
+                    case 'GCN':
+
+                        if hyperparameters is None or hyperparameters == {}:
+
+                            return dc_models.GCNModel(
+                                n_tasks=1,
+                                dropout=0.1,
+                                batch_size=32,
+                                learning_rate=0.001,
+                                graph_conv_layers=[64, 64],
+                                batchnorm=True,
+                                residual=True
+                            )
+                        
+                        else:
+
+                            return dc_models.GCNModel(
+                                n_tasks=1,
+                                dropout=hyperparameters['dropout'],
+                                batch_size=hyperparameters['batch_size'],
+                                learning_rate=hyperparameters['learning_rate'],
+                                graph_conv_layers=hyperparameters['graph_conv_layers'],
+                                batchnorm=True,
+                                residual=hyperparameters['residual']
+                            )
                 
             case _:
                 
