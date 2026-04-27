@@ -296,7 +296,16 @@ class DataPreprocessor:
         print(f"GNN Train size: {len(self.smilesTrainAfp)}")
         print(f"GNN Test size: {len(self.smilesTestAfp)}")
     
-    
+    '''
+    This method is designed to handle DiskDatasets from DeepChem, which contains an array of Train, Val, Test datasets.
+    Each dataset is augmented to have 5 times more data points to improve the performance of GNN models, which typically require larger datasets to train effectively. 
+    The method performs the following steps:
+        1. It iterates through each dataset (train, val, test) in the DiskDataset and extracts the SMILES strings and target values.
+        2. It applies data augmentation techniques to the SMILES strings in the training set to create synthetic data points.
+        3. It featurizes the SMILES strings using model's compatible featurizer to convert them into graph representations suitable for GNNs.
+        4. Stores in instance variables for use in the GNN predictor pipeline.
+        5. Saves the augmented dataset to disk to avoid having to perform augmentation every time the code is run, which can be time-consuming.
+    '''
     def featuriseAndSplitOnDeepChemDiskDatasets(self):
                 
         for datasetIndex, diskDataset in enumerate(self.rawData):
@@ -374,7 +383,7 @@ class DataPreprocessor:
         # Save augmented dataset so that we do not have to augment it again every run
         self.saveAugmentedDataset()
     
-    
+
     '''
     Performs an 80-20 train-test split on the dataset, ensuring that the distribution of the target variable (measured log(solubility:mol/L)) is maintained in both sets. This is important to ensure that our model can generalize well to unseen data and that the performance metrics we calculate on the test set are representative of how the model will perform in real-world scenarios. The method also returns the compound IDs for both the training and test sets, which can be useful for tracking and analyzing specific compounds during model evaluation.
     '''

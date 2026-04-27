@@ -5,7 +5,6 @@ import time
 import numpy as np
 
 import deepchem as dc
-import test
 from CustomModels.GNNHyperparamGrid import GNNHyperparamGrid
 from PredictionModel import PredictionModel
 import matplotlib.pyplot as plt
@@ -21,7 +20,7 @@ init()
 
 class GNNPredictor:
     
-    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None, epoch = 30, admetScreeningType=None):
+    def __init__(self, smilesTrain, smilesTest, smilesValidation, yTest, yValidation, trainDataset, testDataset, validationDataset, modelName=None, epoch = 30, validationPatience = 15, admetScreeningType=None):
         
         # [Model and Dataset Info]
         self.admetScreeningType = admetScreeningType
@@ -49,7 +48,7 @@ class GNNPredictor:
         self.yValidation = yValidation
         self.validationDataset = validationDataset
         self.bestValidationR2 = 0
-        self.validationPatience = 15
+        self.validationPatience = validationPatience
         self.bestHyperparameters = {}
         
         # [Predictions]
@@ -295,7 +294,7 @@ class GNNPredictor:
         
         # Annotate with performance metrics
         plt.annotate(
-            f'MSE:  {self.mse:.4f}\nRMSE: {self.rmse:.4f}\nMAE:  {self.mae:.4f}\nR²:   {self.r2:.4f}',
+            f'MSE:  {self.mse:.4f}\nRMSE: {self.rmse:.4f}\nMAE:  {self.mae:.4f}\nR²:   {self.r2:.4f} \nTraining Time: {self.trainingDuration:.2f} secs \nBest Hyperparameters: {self.bestHyperparameters}\nValidation Patience: {self.validationPatience}\n Best Validation R²: {self.bestValidationR2:.4f} \n Training Epochs: {self.epoch}',
             xy=(0.05, 0.95), xycoords='axes fraction',
             fontsize=10, verticalalignment='top',
             bbox=dict(boxstyle='round', facecolor='white', alpha=0.8)

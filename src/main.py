@@ -60,6 +60,7 @@ def runLipophilicityPipelineAttentiveFP(dataset):
         validationDataset=validationDatasetAfp,
         modelName='AttentiveFP',
         epoch=60,
+        validationPatience=20,
         admetScreeningType='lipophilicity'
     )
     gnnPredictor.runPipeline()
@@ -84,6 +85,7 @@ def runLipophilicityPipelineDMPNN(dataset):
         validationDataset=validationDatasetAfp,
         modelName='DMPNN',
         epoch=50,
+        validationPatience=25,
         admetScreeningType='lipophilicity'
 
     )
@@ -109,6 +111,7 @@ def runLipophilicityPipelineGCN(dataset):
         validationDataset=validationDatasetAfp,
         modelName='GCN',
         epoch=60,
+        validationPatience=20,
         admetScreeningType='lipophilicity'
     )
     gnnPredictor.runPipeline()
@@ -117,11 +120,17 @@ def runLipophilicityPipelineGCN(dataset):
 
 if __name__ == "__main__":
 
-    # Load dataset
+    # =============================================================================
+    # 1. Load dataset
+    # =============================================================================
     datasetLoader = DatasetLoader()
     
     # dataset = datasetLoader.loadKaggleDataset("yeonseokcho/delaney")
-    dataset = datasetLoader.loadLipophilicityDataset()
+    # dataset = datasetLoader.loadLipophilicityDataset()
+    
+    # OpenADMET ExpansionRX Challenge Data (refactor to generalise dataset loading later)
+    dataset = datasetLoader.loadHuggingFaceDataset("default")
+    datasetLoader.getDatasetInfo()
     
     # =============================================================================
     # A. Solubility Screening - Load Data Preprocessor and get train and test sets
@@ -133,20 +142,24 @@ if __name__ == "__main__":
     # =============================================================================
     
     # Instantiate two processes for AttentiveFP and DMPNN to run in parallel
-    process1 = multiprocessing.Process(target=runLipophilicityPipelineAttentiveFP, args=(dataset,))
-    process2 = multiprocessing.Process(target=runLipophilicityPipelineDMPNN, args=(dataset,))
-    process3 = multiprocessing.Process(target=runLipophilicityPipelineGCN, args=(dataset,))
+    # process1 = multiprocessing.Process(target=runLipophilicityPipelineAttentiveFP, args=(dataset,))
+    # process2 = multiprocessing.Process(target=runLipophilicityPipelineDMPNN, args=(dataset,))
+    # process3 = multiprocessing.Process(target=runLipophilicityPipelineGCN, args=(dataset,))
     
     # Start the processes
-    process1.start()
-    process2.start()
-    process3.start()
+    # process1.start()
+    # process2.start()
+    # process3.start()
     
     # Wait for both processes to finish
-    process1.join()
-    process2.join()
-    process3.join()
-    
+    # process1.join()
+    # process2.join()
+    # process3.join()
+
+    # =============================================================================
+    # C. OpenADMET ExpansionRX Challenge Data - Load Data Preprocessor and 
+    #    get train and test sets
+    # =============================================================================    
 
 
 

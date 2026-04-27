@@ -58,3 +58,43 @@ MAE:  0.5097
 R²:   0.4915
 ============================================================
 
+Model Performance Summary - GCN
+Timestamp: 2026-04-26 00:46:02
+
+Training Duration: 1774.71 seconds
+
+Model Hyperparameters:
+ - graph_conv_layers: [64, 64]
+ - dropout: 0.1
+ - learning_rate: 0.001
+ - batch_size: 32
+ - residual: True
+Best Validation R²: 0.6428
+
+Evaluation Metrics on Test Set:
+MSE:  0.3506
+RMSE: 0.5921
+MAE:  0.4389
+R²:   0.5781
+============================================================
+
+Model Performance Summary - GCN
+Timestamp: 2026-04-26 01:24:57
+
+Training Duration: 1794.53 seconds
+
+Model Hyperparameters:
+ - graph_conv_layers: [64, 64]
+ - dropout: 0.1
+ - learning_rate: 0.001
+ - batch_size: 32
+ - residual: True
+Best Validation R²: 0.6136
+
+Evaluation Metrics on Test Set:
+MSE:  5.2918
+RMSE: 2.3004
+MAE:  0.5947
+R²:   -5.3677
+============================================================
+

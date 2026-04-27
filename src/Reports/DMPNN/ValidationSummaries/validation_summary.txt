@@ -586,3 +586,178 @@ Grid Search Iteration 1/2
 Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
 Best Validation R2: 0.7326
 
+Updated: 2026-04-26 00:16:35
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.5140
+
+Updated: 2026-04-26 00:16:59
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.6640
+
+Updated: 2026-04-26 00:17:22
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.6936
+
+Updated: 2026-04-26 00:17:45
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7104
+
+Updated: 2026-04-26 00:18:07
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7196
+
+Updated: 2026-04-26 00:19:13
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7253
+
+Updated: 2026-04-26 00:19:57
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7365
+
+Updated: 2026-04-26 00:31:47
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7373
+
+Updated: 2026-04-26 00:33:23
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7388
+
+Updated: 2026-04-26 00:34:14
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7433
+
+Updated: 2026-04-26 00:36:20
+Global Training ID: 20260426-001612
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7454
+
+Updated: 2026-04-26 00:55:09
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.5334
+
+Updated: 2026-04-26 00:55:30
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.6498
+
+Updated: 2026-04-26 00:55:52
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.6859
+
+Updated: 2026-04-26 00:56:18
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.6956
+
+Updated: 2026-04-26 00:57:06
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7011
+
+Updated: 2026-04-26 00:57:52
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7072
+
+Updated: 2026-04-26 00:58:17
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7079
+
+Updated: 2026-04-26 01:00:21
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7115
+
+Updated: 2026-04-26 01:02:28
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 1
+Grid Search Iteration 1/2
+Hyperparameters: {'enc_dropout_p': 0.1, 'learning_rate': 0.001, 'batch_size': 64}
+Best Validation R2: 0.7221
+
+Updated: 2026-04-26 01:10:00
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7270
+
+Updated: 2026-04-26 01:10:25
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7330
+
+Updated: 2026-04-26 01:11:16
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7364
+
+Updated: 2026-04-26 01:11:41
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7372
+
+Updated: 2026-04-26 01:13:17
+Global Training ID: 20260426-005448
+Hyperparameter Combination ID: 2
+Grid Search Iteration 2/2
+Hyperparameters: {'enc_dropout_p': 0.2, 'learning_rate': 0.0005, 'batch_size': 64}
+Best Validation R2: 0.7412
+
